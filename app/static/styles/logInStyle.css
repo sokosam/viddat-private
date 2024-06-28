@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;500&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff00;
+    font-family: 'Red Hat Display', sans-serif;
+    caret-color: transparent;
+    letter-spacing: 1px;
+}
+
+li, a, button {
+    font-weight: 500;
+    font-size: 19px;
+    color: black;
+    text-decoration: none;
+}
+
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 30px 10%;
+}
+
+.logo {
+    font-family: 'Red Hat Display', sans-serif;
+    cursor: pointer;
+    margin-right: auto;
+}
+
+.nav_links {
+    list-style: none;
+}
+
+.nav_links li{
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+.nav_links li a:hover {
+    color: #31bde0;
+}
+
+button {
+    margin-left: 20px;
+    padding: 9px 25px;
+    background-color: #407cd7;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    color: #fff;
+}
+
+button:hover {
+    background-color: #31bde0;
+}
+
+.landing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+.secondHalf {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    border-radius: 50px;
+    text-align: center;
+    background: rgba(75, 75, 75, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(75, 75, 75, 0.3);
+    transition: all 0.3s ease 0s;
+    }
+
+.secondHalf:hover {
+    width: 50.7%;    
+    background: rgba(32, 32, 32, 0.443);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+form {
+    background-color: #d7d7d700;
+}
+
+.hook {
+    width: 50%;
+    background-color: #ffffff00;
+}
+
+.landing h1 {
+    background-color: #ffffff00;
+}
+
+.landing:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+.secondHalf h1 {
+    font-size: 100px;
+}
+
+.secondHalf h2{
+    font-weight: 300;
+    font-size: 26px;
+}
+
+
+input[type=email], [type=text], [type=password] {
+    background-color: #fff;
+    width: 420px;
+    padding: 4px 5px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    caret-color: #000000;
+    font-size: 26px;
+    font-weight: 300;
+  }
+
+input[type=submit]{
+    background-color: #346DFF;
+    width: 420px;
+    color: white;
+    border : 0;
+    cursor: pointer;
+    font-size: 32px;
+    transition: all 0.3s ease 0s;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+input[type=submit]:hover{
+    background-color: #456ed5;
+}
+
+.secondHalf a {
+    color: #00eaff;
+    font-size: 20px;
+}
+
+.secondHalfInside {
+    text-align: left;
+}
+
+.secondHalf label {
+    font-size: 26px;
+    font-weight: 300;
+}
+
+.all {
+    background-image: url('/static/loginBg.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    padding-bottom: 200px;
+}
+
+/* The alert message box */
+.alert {
+    padding: 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+    margin-bottom: 15px;
+    width: 420px;
+  }
+  
+  /* The close button */
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  /* When moving the mouse over the close button */
+  .closebtn:hover {
+    color: black;
+  }

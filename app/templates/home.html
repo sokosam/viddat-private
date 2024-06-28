@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/main.css')}}" />
+    <title>VidBot</title>
+    <script>
+        window.onscroll = function() {myFunction()};
+        
+        function myFunction() {
+            var navbar = document.getElementById("navbar");
+            var sticky = navbar.offsetTop;
+            
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("sticky");
+            } else {
+                navbar.classList.remove("sticky");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="navbar" class="navbar">
+        <header>
+            <a href="/" class="logo"><h1>VidBot</h1></a>
+            <nav>
+                <ul class="nav_links">
+                    <li><a href="{{url_for('views.emailVerified')}}">Pricing</a></li>
+                    <li><a href="{{url_for('auth.login')}}">Log in</a></li>
+                </ul>
+            </nav>
+            <a class="cta" href="{{url_for('auth.sign_up')}}"><button>Get Started for Free</button></a>
+        </header>
+    </div>
+    <section>
+       <div class="landing">
+            <div class="hook">
+                <h1 style="color:black; font-weight: 900;">Create Viral Videos</h1>
+                <h1 style="  
+                background: rgb(217,2,254);
+                background: linear-gradient(309deg, rgba(217,2,254,1) 0%, rgba(43,104,197,1) 100%);;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-weight: 900;">For Social Media</h1>
+                <h2 style="font-size: 25px;font-weight: 300;">
+                    Generate narrated voice overs of Reddit posts into <br> high engagement social media videos
+                </h2>
+            </div>
+
+            <div class="landingGraphic">
+                <img src="static/computerImg.png" width="100%" style="margin-top: -150px; background-color: transparent; max-width:100%; height:auto">
+
+            </div>
+
+            <div class="featuresSection">
+                <h1 style="text-align: left;">Transform Your Content <br>
+                    with Powerful Features</h1>
+                
+                <div class="featuresParent">
+                    <div class="featuresChild">
+                        <h2>Easy Video Creation</h2>
+                        <p>Automate video creation with just a few clicks and eliminate the need for complex editing software.</p>
+                    </div>
+                    <div class="featuresChild">
+                        <h2>Engaging Templates</h2>
+                        <p>Choose from a variety of high-quality templates designed to captivate your audience and boost engagement.</p>
+                    </div>
+                    <div class="featuresChild">
+                        <h2>Maximized Impact</h2>
+                        <p>Optimize your videos for maximum Impact on social media, to reach the widest possible audience.</p>
+                    </div>
+                </div>
+                <div style="float: left; display: inline;">
+                <a class="featuresCta" href="{{url_for('auth.sign_up')}}"><button>Get Started</button></a>
+                </div>
+            </div>
+       </div>
+       
+       <div class="howItWorksSection">
+
+       </div>
+    </section>
+</body>
+</html>
