@@ -1,0 +1,24 @@
+services:
+    web:
+        build: ./app
+        command: python app.py
+        ports:
+            - 5000:5000
+        depends_on:
+            - redis
+    worker:
+        build: ./worker
+        command: rq worker -u redis://redis:6379
+        depends_on:
+            - redis
+            - web
+        deploy:
+            mode: replicated
+            replicas: 4
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+                max_attempts: 3
+                window: 120s
+    redis:
+        image: redis:latest
