@@ -15,13 +15,20 @@ app.config['MAIL_PASSWORD'] = getEmailPWD()
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
+
+import logging
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
+
 connection = Redis(host='redis', port =6379)
+app.config["CONNECTION"] = connection
 app.config['QUEUE'] = Queue(connection=connection)
 mailer = Mail(app)
 
 def create_app():
     app.config["SECRET_KEY"] = getAppKey()
     app.config["SQLALCHEMY_DATABASE_URI"] = getSQL()
+    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {"pool_pre_ping": True}  
     db.init_app(app)
 
     from views import views
