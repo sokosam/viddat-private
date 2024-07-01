@@ -1,7 +1,5 @@
-from flask import Blueprint, render_template, request, session, current_app
+from flask import Blueprint, render_template, request, session, current_app, redirect, url_for
 from flask_login import login_user, login_required, logout_user, current_user
-from rq import Queue
-from redis import Redis 
 import time
 
 import random
@@ -21,13 +19,13 @@ def client():
         if not part:print(part)
 
         user_id = current_user.get_id()
-        print(user_id, flush=True)
 
         params = {
             'TEXT': text,
             'TITLE': title,
             'PART': part,
             "ID": generate_random_string(),
+            "USERID": user_id
         }
 
         queue = current_app.config['QUEUE']
@@ -35,9 +33,11 @@ def client():
         job = queue.fetch_job(user_id)
         if job and job.get_status() == 'started':
             print(user_id, "attempted to start a job. \n STATUS: FAIL, user already has a job running", flush=True)
-            return render_template('clientPage.html', user=current_user)
+            return redirect(url_for('client_page.client'))
 
+        current_user.current_video = params["ID"]
         queue.enqueue("worker.script_async", params,job_id=user_id)
+        print(user_id, "attempted to start a job. \n STATUS: SUCCESS", flush=True)
     return render_template('clientPage.html', user=current_user)
 
 @client_page.route('/accountSettings')
@@ -54,6 +54,29 @@ def premiumSubscriptions():
 @login_required
 def billingHistory():
     return render_template('billingHistory.html', user=current_user)
+
+@client_page.route('/status', methods=["GET"])
+@login_required
+def status():
+    if request.method =="GET":
+        # try:
+        queue = current_app.config['QUEUE']
+        user = current_user.get_id()
+        job = queue.fetch_job(user)
+
+        if job:
+            video_status = job.get_status()
+            if video_status == "finished":
+                video = job.fetch(id= user, connection = current_app.config["CONNECTION"]).result
+                print(video,flush=True)
+            else:
+                video = "Video Not Done Proccessing!"
+        else:
+            video = "No Video Currently Generating!"
+            video_status = "nothing"
+        # except Exception as e:
+        #     print(e, flush=True)
+    return render_template("status.html", user=current_user, video_status=video_status, video=video)
 
 def generate_random_string(length=8):
     characters = string.ascii_letters + string.digits  # Includes both letters and numbers

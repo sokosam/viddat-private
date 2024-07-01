@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;500&display=swap');
+
+* {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #E8E8E8;
+    box-sizing: border-box;
+    font-family: 'Red Hat Display', sans-serif;
+    caret-color: rgba(0, 0, 0, 0);
+    letter-spacing: 1px;
+}
+
+
+
+header *{
+    background-color: white !important;
+}
+
+nav a {
+    text-decoration: none;
+    font-weight: 300;
+}
+
+nav h1 {
+    font-size: 40px;
+}
+
+nav {
+    width: 100%;
+    padding: 10px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    -webkit-box-shadow: 2px 4px 15px 0px #BDBDBD; 
+    box-shadow: 2px 4px 15px 0px #BDBDBD;
+}
+
+
+.user-pic:hover{
+    cursor: pointer;
+}
+
+.sub-menu-wrap {
+    max-height: 0px;
+    border-radius: 7px;
+    position: absolute;
+    top:100%;
+    right: 1%;
+    width: 400px;
+    background-color: rgb(255, 255, 255);
+    margin-top: 15px;
+    overflow: hidden;
+    transition: max-height 0.5s;
+}
+
+.sub-menu-wrap.open-menu {
+    max-height: 400px;
+    -webkit-box-shadow: 0px 1px 15px 5px #bfbfbf72; 
+    box-shadow: 0px 1px 15px 5px #bfbfbf72;
+} 
+
+
+
+.sub-menu {
+    background: #fff;
+    padding: 10px 2px;
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.account-settings {
+    margin-top: 7px;
+    display: flex;
+    flex-direction: row;
+}
+
+.user-info h3, .user-email h2 {
+    font-weight: 500;
+    font-size: 18px;
+    color: rgb(0, 0, 0);
+}
+
+
+.user-email {
+    border: none;
+    border-bottom: 1px solid rgba(213, 213, 213, 0.831);
+    padding: 30px;
+}
+
+.logbutton {
+    width: 120px;
+    border-radius: 25px;
+    font-size: 20px;
+    padding:4px 10px ;
+    background-color: #fff;
+    color: #346DFF;
+    border-color: #346DFF;
+}
+
+.logbutton:hover {
+    cursor: pointer;
+    color: grey;
+    background-color: #346DFF;
+
+}
+
+.downArrow {
+    margin-left: 10px;
+    transition: filter 0.1s;
+}
+
+.profile:hover .downArrow {
+    filter: invert(34%) sepia(32%) saturate(5007%) hue-rotate(216deg) brightness(101%) contrast(101%);
+    cursor: pointer;
+}
+
+.profile:hover {
+    cursor: pointer;
+}
+
+.profile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+nav ul {
+    width: 100%;
+    text-align: right;
+}
+
+nav ul li {
+    display: inline-block;
+    list-style: none;
+    margin: 10px 20px;
+
+}
+
+nav ul li a{
+    color: black;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+nav ul li a:hover {
+    color: #346DFF;
+}
+
+.status {
+    padding: 10vh 5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: max-content;
+    
+}
+
+.status *{
+    background-color: #fff; 
+}
+
+.status h1{
+    padding-top : 1em;
+    font-size: 2em;
+}
+
+.status_video_wrapper {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 21px 18px;
+    width: 60%;
+    height: 80%;
+}
+.createVideoWrapper h1, .myVideosWrapper h1 {
+    font-size: 42px;
+    padding-bottom: 20px;
+}
+
+.myVideosWrapper {
+    margin-left: 47px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 21px 65px;
+    width: 930px;
+}
+
+label {
+    font-weight: 300;
+    font-size: 16px;
+    
+}
+
+.partSelector {
+    text-align: left;
+}
+
+.video_image{
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    height: 30%;
+    width: 30%;
+}
+
+.sideNav {
+    float: left;
+    background-color: #fff;
+    width: 13%;
+    height: 100%;
+    padding-top: 30px;
+    border-right: 1px solid #D3D3D3;
+}
+
+.sideNav li {
+    text-align: left;
+    list-style-type: none;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    transition: 0.1s ease-in;
+}
+
+.sideNav a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 300;
+}
+
+.sideNav li:hover {
+    background-color: #dee5f6;
+}
+
+.accountSettingsParent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f4f7;
+    width: 87%;
+    height: 100%;
+    float:right;
+}
+
+li{
+    list-style-type: none;
+}
+
+.status_video{
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    text-decoration:none;
+    display: block;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    unicode-bidi: isolate;
+
+}
+
+#redirect_client {
+    width: fit-content;
+    margin: 1rem;
+    border-radius: 25px;
+    font-size: 20px;
+    padding:4px 10px ;
+    background-color: #fff;
+    color: #346DFF;
+    border-color: #346DFF;
+}
+#redirect_client:hover{
+    cursor: pointer;
+}

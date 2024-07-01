@@ -7,4 +7,6 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(200), unique=True)
     password = db.Column(db.String(105))
     emailConfirm = db.Column(db.Boolean)
+    current_video = None
+
     

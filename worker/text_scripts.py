@@ -61,12 +61,12 @@ def getGender(text):
     return male-female
 
 # Deprecated
-# def changeAcro(txt):
-#     acronyms = {}
-#     if txt.lower() in acronyms or re.sub(r'[^a-zA-Z]', "",txt.lower()) in acronyms:
-#         if txt.lower() in acronyms: return acronyms[txt.lower()]
-#         else: return  re.sub(re.sub(r'[^a-zA-Z]', "",txt.lower()), acronyms[re.sub(r'[^a-zA-Z]', "",txt.lower())] ,txt.lower())
-#     else: return txt
+def changeAcro(txt):
+    acronyms = {}
+    if txt.lower() in acronyms or re.sub(r'[^a-zA-Z]', "",txt.lower()) in acronyms:
+        if txt.lower() in acronyms: return acronyms[txt.lower()]
+        else: return  re.sub(re.sub(r'[^a-zA-Z]', "",txt.lower()), acronyms[re.sub(r'[^a-zA-Z]', "",txt.lower())] ,txt.lower())
+    else: return txt
 
 # Deprecated
 # def getTextFromFile(file):

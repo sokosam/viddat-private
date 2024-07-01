@@ -154,6 +154,7 @@ nav ul li a:hover {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    height: 100vh;
 }
 
 .createVideoWrapper {
@@ -161,6 +162,7 @@ nav ul li a:hover {
     border-radius: 10px;
     padding: 21px 18px;
     width: 608px;
+    height: max-content;
 }
 
 .createVideoWrapper h1, .myVideosWrapper h1 {

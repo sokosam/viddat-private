@@ -5,6 +5,7 @@ import os
 import zipfile
 import boto3
 import shutil
+from time import sleep
 conn = Redis(host='redis', port=6379)
 worker = Worker(map(Queue, ['default']), connection=conn)
 
@@ -26,9 +27,15 @@ def script_async(params):
         client = session.client("s3")
         with open(params["ID"]+".zip", "rb") as f:
             client.upload_fileobj(f, "tsbckt", params["ID"]+".zip")
+            print("File: "+ params["ID"]+".zip " + "uploaded by user: " + params["USERID"], flush=True)
         
         shutil.rmtree("temp"+params["ID"])
         os.remove(params["ID"]+".zip")
-
+        url = client.generate_presigned_url("get_object", Params=
+                                        {'Bucket': "tsbckt",
+                                        "Key": params["ID"]+".zip"},
+                                        ExpiresIn = 600)
+        print(url,flush=True)
     except Exception as e:
         print(e)
+    return url
