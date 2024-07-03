@@ -16,6 +16,7 @@ def client():
         text = request.form.get('text')
         title = request.form.get('title')
         part = request.form.get('part')
+        video = request.form.get('videos')
         if not part:print(part)
 
         user_id = current_user.get_id()
@@ -25,7 +26,8 @@ def client():
             'TITLE': title,
             'PART': part,
             "ID": generate_random_string(),
-            "USERID": user_id
+            "USERID": user_id,
+            "VIDEO":video
         }
 
         queue = current_app.config['QUEUE']

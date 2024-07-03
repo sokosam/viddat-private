@@ -18,7 +18,7 @@ def script_async(params):
     try:
         client = web_gen()
         os.mkdir(path ="temp"+params["ID"])
-        client.generate_video(text=params['TEXT'], title=params['TITLE'], red_text=params['PART'], output_path="temp"+params["ID"], output_name="video.mp4")
+        client.generate_video(text=params['TEXT'], title=params['TITLE'], red_text=params['PART'], output_path="temp"+params["ID"], stock_footage =params["VIDEO"],output_name="video.mp4")
         with zipfile.ZipFile(params["ID"]+".zip", "w") as zfile:
             zfile.write(os.path.join("temp"+params["ID"], "video.mp4"), arcname="video.mp4")
 

@@ -13,7 +13,7 @@
                 <nav>
                     <a href="{{ url_for('client_page.client') }}" class="logo"><h1 style="color: black;">VidBot</h1></a>
                     <ul class="nav_links">
-                        <li><a href="{{url_for('client_page.status')}}">Your Video</a></li>
+                        <li><a href="{{url_for('client_page.status')}}">Background Footage</a></li>
                         <li><a href="{{url_for('views.pricing')}}">Statistics</a></li>
                         <li><a href="{{url_for('auth.login')}}" style="margin-right: 20px;">Profile</a></li>
                     </ul>
@@ -45,10 +45,10 @@
             </header>
         </div>
     </header>
+    <form method="POST" >
     <section class="clientLanding">
         <div class="createVideoWrapper">
             <h1>Create Video</h1>
-            <form method="POST">
                     <textarea class="title" name="title" rows="4" cols="50" placeholder="Enter Video Title Here:"></textarea>
                     <br><br>
                     <textarea  class="text" name="text" rows="4" cols="50" placeholder="Enter Video Text Here:"></textarea>
@@ -58,18 +58,78 @@
                         <input type="number" id="part" name="part"><br><br>
                     </div>
                     <input class="createButton" type="submit" value="Create Video"><br><br>
-            </form>
         </div>
         <div class="myVideosWrapper">
             <h1>My Videos</h1>
-        </div>
+                <div id="videos">
+                    <div class="video_box">
+                        <img src="../static/minecraft_cover.png" class="display_img" alt="">
+                        <label class="container">Minecraft
+                            <input type="checkbox" name="videos" value="stock_footage/minecraft.mp4">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="video_box">
+                        <img src="../static/Mirror's_Edge_Catalyst.jpg" class="display_img" alt="">
+                        <label class="container">Mirrors Edge
+                            <input type="checkbox" name="videos" value="Mirrors Edge">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="video_box">
+                        <img src="../static/images.jpg" class="display_img" alt="">
+                        <label class="container">Spider-Man
+                            <input type="checkbox" name="videos" value="Spider-Man">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="video_box">
+                        <img src="../static/homemade-korean-dish-bibimbap-free-photo.webp" class="display_img" alt="">
+                        <label class="container">Cooking
+                            <input type="checkbox" name="videos" value='stock_footage/cooking.mp4'>
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="video_box">
+                        <img src="../static/trackmania.jpg" class="display_img"alt="">
+                        <label class="container">Trackmania
+                            <input type="checkbox" name="videos" value="Trackmania">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="video_box">
+                        <img src="../static/upload_video.png" alt="">
+                        <label class="container">Custom Video
+                            <input type="checkbox" name="videos" value="Custom Video">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
 
+                    
+                </div>
+            <div>
+
+            </div>
+        </div>
+    <script type="text/javascript">
+        let boxes = document.querySelectorAll("input[type=checkbox]");
+        boxes.forEach(b => b.addEventListener("change", tick));
+        function tick(e) {
+        let state = e.target.checked; // save state of changed checkbox
+        boxes.forEach(b => b.checked = false); // clear all checkboxes
+        e.target.checked = state; // restore state of changed checkbox
+        }
+        </script>
     <script>
         let subMenu = document.getElementById("subMenu");
 
         function toggleMenu() {
             subMenu.classList.toggle("open-menu");
         }
+
     </script>
+    </section>
+</form> 
 </body>
 </html>
+
