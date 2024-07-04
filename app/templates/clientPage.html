@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/clientPage.css')}}" />
-    <title>VidBot Home</title>
+    <title>Viddat Home</title>
 </head>
 <body>
     <header>
         <div id="navbar">
             <header>    
                 <nav>
-                    <a href="{{ url_for('client_page.client') }}" class="logo"><h1 style="color: black;">VidBot</h1></a>
+                    <a href="{{ url_for('client_page.client') }}" class="logo"><h1 style="color: black;">Viddat</h1></a>
                     <ul class="nav_links">
-                        <li><a href="{{url_for('client_page.status')}}">Background Footage</a></li>
+                        <li><a href="{{url_for('client_page.status')}}">Your Video</a></li>
                         <li><a href="{{url_for('views.pricing')}}">Statistics</a></li>
                         <li><a href="{{url_for('auth.login')}}" style="margin-right: 20px;">Profile</a></li>
                     </ul>
@@ -54,13 +54,14 @@
                     <textarea  class="text" name="text" rows="4" cols="50" placeholder="Enter Video Text Here:"></textarea>
                     <br><br>
                     <div class="partSelector">
-                        <label for="part">What part of the series <br>is this (if applicable)</label><br>
-                        <input type="number" id="part" name="part"><br><br>
+                        <label for="part">(Optional) Red Highlighted Text</label><br><br>
+                        <textarea  class="title" name="part" rows="4" cols="50" placeholder="Enter Red Highlighted Text Here:"></textarea>
+                        <br><br>
                     </div>
                     <input class="createButton" type="submit" value="Create Video"><br><br>
         </div>
         <div class="myVideosWrapper">
-            <h1>My Videos</h1>
+            <h1>Background Footage</h1>
                 <div id="videos">
                     <div class="video_box">
                         <img src="../static/minecraft_cover.png" class="display_img" alt="">
@@ -70,21 +71,21 @@
                         </label>
                     </div>
                     <div class="video_box">
-                        <img src="../static/Mirror's_Edge_Catalyst.jpg" class="display_img" alt="">
+                        <img src="../static/mirrorsedge.jpg" class="display_img" alt="">
                         <label class="container">Mirrors Edge
                             <input type="checkbox" name="videos" value="Mirrors Edge">
                             <span class="checkmark"></span>
                         </label>
                     </div>
                     <div class="video_box">
-                        <img src="../static/images.jpg" class="display_img" alt="">
+                        <img src="../static/spiderman.jpg" class="display_img" alt="">
                         <label class="container">Spider-Man
                             <input type="checkbox" name="videos" value="Spider-Man">
                             <span class="checkmark"></span>
                         </label>
                     </div>
                     <div class="video_box">
-                        <img src="../static/homemade-korean-dish-bibimbap-free-photo.webp" class="display_img" alt="">
+                        <img src="../static/cooking.webp" class="display_img" alt="">
                         <label class="container">Cooking
                             <input type="checkbox" name="videos" value='stock_footage/cooking.mp4'>
                             <span class="checkmark"></span>
@@ -98,19 +99,18 @@
                         </label>
                     </div>
                     <div class="video_box">
-                        <img src="../static/upload_video.png" alt="">
+                        <img src="../static/upload_video.png"  alt="">
                         <label class="container">Custom Video
-                            <input type="checkbox" name="videos" value="Custom Video">
+                            <input type="checkbox" name="videos" value="Custom Video" disabled value="1">
+                            <p>Coming Soon!</p>
                             <span class="checkmark"></span>
                         </label>
                     </div>
-
-                    
                 </div>
             <div>
-
+                <!-- New layer in the future -->
             </div>
-        </div>
+    </div>
     <script type="text/javascript">
         let boxes = document.querySelectorAll("input[type=checkbox]");
         boxes.forEach(b => b.addEventListener("change", tick));

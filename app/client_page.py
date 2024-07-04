@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, session, current_app, redirect, url_for
+from flask import Blueprint, render_template, request, session, current_app, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user, current_user
 import time
 
@@ -14,32 +14,37 @@ client_page = Blueprint('client_page', __name__)
 def client():
     if request.method == "POST":
         text = request.form.get('text')
-        title = request.form.get('title')
-        part = request.form.get('part')
-        video = request.form.get('videos')
-        if not part:print(part)
+        if len(text) < 100:
+            flash("Content must be atleast 100 characters")
+        elif len(text) >5000:
+            flash("Content cannot be greater than 5000 characters, try splitting it into parts!")
+        else:
+            title = request.form.get('title')
+            part = request.form.get('part')
+            video = request.form.get('videos')
+            if not part:print(part)
 
-        user_id = current_user.get_id()
+            user_id = current_user.get_id()
 
-        params = {
-            'TEXT': text,
-            'TITLE': title,
-            'PART': part,
-            "ID": generate_random_string(),
-            "USERID": user_id,
-            "VIDEO":video
-        }
+            params = {
+                'TEXT': text,
+                'TITLE': title,
+                'PART': part,
+                "ID": generate_random_string(),
+                "USERID": user_id,
+                "VIDEO": video
+            }
 
-        queue = current_app.config['QUEUE']
+            queue = current_app.config['QUEUE']
 
-        job = queue.fetch_job(user_id)
-        if job and job.get_status() == 'started':
-            print(user_id, "attempted to start a job. \n STATUS: FAIL, user already has a job running", flush=True)
-            return redirect(url_for('client_page.client'))
+            job = queue.fetch_job(user_id)
+            if job and job.get_status() == 'started':
+                print(user_id, "attempted to start a job. \n STATUS: FAIL, user already has a job running", flush=True)
+                return redirect(url_for('client_page.client'))
 
-        current_user.current_video = params["ID"]
-        queue.enqueue("worker.script_async", params,job_id=user_id)
-        print(user_id, "attempted to start a job. \n STATUS: SUCCESS", flush=True)
+            current_user.current_video = params["ID"]
+            queue.enqueue("worker.script_async", params,job_id=user_id)
+            print(user_id, "attempted to start a job. \n STATUS: SUCCESS", flush=True)
     return render_template('clientPage.html', user=current_user)
 
 @client_page.route('/accountSettings')
