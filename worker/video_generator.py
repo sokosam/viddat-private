@@ -117,10 +117,17 @@ class web_gen:
         if not gender: gender = textProcessing.getGender(text) 
         if title: gender += textProcessing.getGender(title)
 
+        if not stock_footage or stock_footage=="":
+            stock_footage = os.path.join('stock_footage',choice(os.listdir("stock_footage")))
+
         title_end, end, audio_str = self.generate_audio(output_path, text, title, gender)
-    
-        probe = ffmpeg.probe(stock_footage)
-        
+
+        print(stock_footage)
+
+        try:
+            probe = ffmpeg.probe(stock_footage)
+        except ffmpeg.Error as e:
+            print(e.stderr, flush=True)
         video_streams = [stream for stream in probe["streams"] if stream["codec_type"] == "video"]
         w,h = int(video_streams[0]['width']), int(video_streams[0]['height'])
 
