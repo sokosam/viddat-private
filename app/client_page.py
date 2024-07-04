@@ -15,16 +15,16 @@ def client():
     if request.method == "POST":
         text = request.form.get('text')
         if len(text) < 100:
-            flash("Content must be atleast 100 characters")
+            flash("Content must be atleast 100 characters", category="error")
         elif len(text) >5000:
-            flash("Content cannot be greater than 5000 characters, try splitting it into parts!")
+            flash("Content cannot be greater than 5000 characters, try splitting it into parts!", category="error")
         else:
             title = request.form.get('title')
             part = request.form.get('part')
             video = request.form.get('videos')
-            if not part:print(part)
+            gender = int(request.form.get('gender'))
 
-            user_id = current_user.get_id()
+            user_id = current_user.get_id() 
 
             params = {
                 'TEXT': text,
@@ -32,7 +32,8 @@ def client():
                 'PART': part,
                 "ID": generate_random_string(),
                 "USERID": user_id,
-                "VIDEO": video
+                "VIDEO": video,
+                "GENDER": gender,
             }
 
             queue = current_app.config['QUEUE']
@@ -40,11 +41,13 @@ def client():
             job = queue.fetch_job(user_id)
             if job and job.get_status() == 'started':
                 print(user_id, "attempted to start a job. \n STATUS: FAIL, user already has a job running", flush=True)
+                flash("You already have a video generating!", category="error")
                 return redirect(url_for('client_page.client'))
 
             current_user.current_video = params["ID"]
             queue.enqueue("worker.script_async", params,job_id=user_id)
             print(user_id, "attempted to start a job. \n STATUS: SUCCESS", flush=True)
+            flash("Your videos now generating! Head over to Video Status to retrieve it!",category="success")
     return render_template('clientPage.html', user=current_user)
 
 @client_page.route('/accountSettings')
@@ -71,7 +74,14 @@ def status():
         user = current_user.get_id()
         job = queue.fetch_job(user)
 
+        videos = {
+            r"stock_footage/cooking.mp4": ("Cooking","cooking.webp"),
+            r"stock_footage/minecraft.mp4": ("Minecraft", "minecraft_cover.png"),
+        }
+
         if job:
+            params = job.fetch(id= user, connection = current_app.config["CONNECTION"]).args[0]
+
             video_status = job.get_status()
             if video_status == "finished":
                 video = job.fetch(id= user, connection = current_app.config["CONNECTION"]).result
@@ -83,7 +93,14 @@ def status():
             video_status = "nothing"
         # except Exception as e:
         #     print(e, flush=True)
-    return render_template("status.html", user=current_user, video_status=video_status, video=video)
+    return render_template("status.html",
+                            user=current_user,
+                            video_status=video_status,
+                            video=video,
+                            stock_footage = videos[params["VIDEO"]][0],
+                            cover=  videos[params["VIDEO"]][1],
+                            characters=  len(params["TEXT"])
+                            )
 
 def generate_random_string(length=8):
     characters = string.ascii_letters + string.digits  # Includes both letters and numbers
