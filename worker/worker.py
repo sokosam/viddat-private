@@ -37,5 +37,5 @@ def script_async(params):
                                         ExpiresIn = 600)
         print(url,flush=True)
     except Exception as e:
-        print(e)
+        print(e, flush=True)
     return url

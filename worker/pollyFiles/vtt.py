@@ -98,12 +98,6 @@ class VTT:
         if len(sentences) == len(textWords):
             for i,sentence in enumerate(sentences):
                 sentence['value'] = textWords[i]
-        else: 
-            print(len(sentences), len(textWords))
-            for i,s in enumerate(sentences):
-                print(i, s["value"])
-            for i,s in enumerate(textWords):
-                print(i, s)
         # print(self.breakSentence())
                 
         phrase = []

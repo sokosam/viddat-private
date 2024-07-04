@@ -57,25 +57,30 @@ class web_gen:
         if gender < 0: gender = "Joanna"
         else: gender =  "Matthew"
 
-        #Make sure the title does disallowed words
-        temp = ""
-        for i in title.split(): temp+= textProcessing.changeAcro(i) +" "
-        title = temp[0: -1]
+        #Make sure the title does disallowed words\
+        if title:
+            temp = ""
+            for i in title.split(): temp+= textProcessing.changeAcro(i) +" "
+            title = temp[0: -1]
 
         #As Polly only accepts text < 3000 characters, we must first slice the text.
         text_list = textProcessing.pollySplicer(text)
-        concat_audio = [os.path.join(output_path,'title.mp3')]
+        concat_audio = []
         concat_SRT = []
 
-        polly = PollyVTT(params = {"AWS_ACCESS_KEY": r"AKIAZQ3DTVZZEIHYE4HL", "AWS_SECRET_KEY": r"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"})
+        polly = PollyVTT(params = {"AWS_ACCESS_KEY": r"AKIAZQ3DTVZZFAIXPFKK", "AWS_SECRET_KEY": r"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"})
 
-        time += polly.generate(
-                                filename = os.path.join(output_path, "title"),
-                                format = "srt",
-                                Text = f"<speak><prosody rate='{speed}%'>" + title + '<break time ="1s"/></prosody></speak>',
-                                VoiceId = gender,
-                                OutputFormat = "mp3")
-        title_time = time
+        if title:
+            time += polly.generate(
+                                    filename = os.path.join(output_path, "title"),
+                                    format = "srt",
+                                    Text = f"<speak><prosody rate='{speed}%'>" + title + '<break time ="1s"/></prosody></speak>',
+                                    VoiceId = gender,
+                                    OutputFormat = "mp3")
+            title_time = time
+            concat_audio = [os.path.join(output_path,'title.mp3')]
+        else:
+            title_time = 0
 
         for index,pollyText in enumerate(text_list):
             if index == len(text_list) -1:
@@ -109,7 +114,8 @@ class web_gen:
 
     def generate_video(self, text, title, red_text, output_path, output_name, start_time= 0, stock_footage = r'stock_footage/cooking.mp4', music_choice= None, delay= 0,gender = None, style= "FontName=OPTIGranby-ElephantAgency,FontSize=20,Alignment=10,Shadow=1,Spacing=-1"):
 
-        if not gender: gender = textProcessing.getGender(text) + textProcessing.getGender(title)
+        if not gender: gender = textProcessing.getGender(text) 
+        if title: gender += textProcessing.getGender(title)
 
         title_end, end, audio_str = self.generate_audio(output_path, text, title, gender)
     
@@ -133,12 +139,17 @@ class web_gen:
         subs.shift(seconds = title_end)
         subs.save(os.path.join(output_path, 'body.srt'), encoding='utf-8')
 
-        thumbnail_generator(text= title,red_text=red_text, output_path = output_path, file_name ='title.mp3',newSize=newH)
+
         
         subtitle_body_path = os.path.join(output_path, 'body.srt').replace("\\", r"\\")
 
         out = os.path.join(output_path, output_name)    
-        command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -i {stock_footage} -i {os.path.join(output_path,"title.mp3.png")} -i "concat:{audio_str}" -filter_complex "[0:v][1:v] overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2:enable='between(t,0,{title_end})',subtitles={subtitle_body_path}:force_style='{style}'" -shortest -map 2:a:0 -to {end} {out} -hide_banner -loglevel error -y"""
+
+        if title:
+            thumbnail_generator(text= title,red_text=red_text, output_path = output_path, file_name ='title.mp3',newSize=newH)
+            command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -i {stock_footage} -i {os.path.join(output_path,"title.mp3.png")} -i "concat:{audio_str}" -filter_complex "[0:v][1:v] overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2:enable='between(t,0,{title_end})',subtitles={subtitle_body_path}:force_style='{style}'" -shortest -map 2:a:0 -to {end} {out} -hide_banner -loglevel error -y"""
+        else:
+            command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -i {stock_footage} -i "concat:{audio_str}" -filter_complex "[0:v] subtitles={subtitle_body_path}:force_style='{style}'" -shortest -map 1:a:0 -to {end} {out} -hide_banner -loglevel error -y"""
         # command = (
         #     "ffmpeg",
         #     "-stream_loop", "-1",
