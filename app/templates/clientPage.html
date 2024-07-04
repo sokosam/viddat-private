@@ -42,6 +42,26 @@
                         </div>
                     </div>
                 </nav>
+                {% with messages = get_flashed_messages(category_filter=["error"])%}
+                {% if messages%}
+                    {% for message in messages%}
+                    <div class="alert">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        {{message}}
+                    </div>
+                    {%endfor%}
+                    {%endif%}
+                    {%endwith%}
+                {% with messages = get_flashed_messages(category_filter=["success"])%}
+                {% if messages%}
+                    {% for message in messages%}
+                    <div class="alert_success">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        {{message}}
+                    </div>
+                    {%endfor%}
+                    {%endif%}
+                    {%endwith%}
             </header>
         </div>
     </header>
@@ -54,9 +74,20 @@
                     <textarea  class="text" name="text" rows="4" cols="50" placeholder="Enter Video Text Here:"></textarea>
                     <br><br>
                     <div class="partSelector">
-                        <label for="part">(Optional) Red Highlighted Text</label><br><br>
-                        <textarea  class="title" name="part" rows="4" cols="50" placeholder="Enter Red Highlighted Text Here:"></textarea>
-                        <br><br>
+                        <div style="width: fit-content;">
+                            <label for="part">(Optional) Red Highlighted Text</label><br><br>
+                            <textarea  class="redtitle" name="part" rows="4" cols="30" placeholder="Enter Red Highlighted Text Here:"></textarea>
+                            <br><br>
+                        </div>
+                        <div style="margin-left : 20%; width: 40%;">
+                            <p>Narrator Gender:</p>
+                                <label for="gender" style="font-size: small;"> A gender will be inferred through the text if one is not provided!</label>
+                                <br>
+                                <span>Male</span>
+                                <input type="radio" name="gender" value="999999">
+                                <span>Female</span>
+                                <input type="radio" name="gender" value="-999999">
+                        </div>
                     </div>
                     <input class="createButton" type="submit" value="Create Video"><br><br>
         </div>
