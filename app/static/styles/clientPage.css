@@ -369,3 +369,14 @@ input[type=submit]{
     background: white;
   }
 
+  .accountSettingsParent {
+    display: block;
+    padding: 50px 100px;
+  }
+
+  .accountSettingsChild {
+    width: 85%;
+    background-color: #fff;
+    border-radius: 9px;
+  }
+

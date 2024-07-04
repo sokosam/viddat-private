@@ -53,8 +53,24 @@
             </div>
 
             <div class="accountSettingsParent">
-                <div class="accountSettingsChild">
+                <h1 style="text-align: left; font-size: 30px;">Account Settings</h1>
+                <p style="text-align: left; padding-bottom: 30px; font-weight: 300; font-size: 18px;">View and update your account details, profile and more.</p>
 
+                <div class="accountSettingsChild">
+                    <div style="border-bottom: 1px solid #D3D3D3; padding: 20px 30px;">
+                        <h1 style="text-align: left; font-size: 20px;">Account Info</h1>
+                    </div>
+                    <div style="padding: 30px">
+                        <form action="/action_page.php">
+                            <label for="fname">AWS Secret Code:</label>
+                            <input type="text" id="secret"><br><br>
+                            <label for="lname">AWS Access Code:</label>
+                            <input type="text" id="access" ><br><br>
+                            <label for="lname">Username:</label>
+                            <input type="text" id="username"placeholder="Username"><br><br>
+                            <input type="submit" value="Submit">
+                        </form>
+                    </div> 
                 </div>
             </div>
     </section>
