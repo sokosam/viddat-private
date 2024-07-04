@@ -207,6 +207,11 @@ textarea.title {
     height: 80px;
 }
 
+textarea.redtitle {
+    height: 80px;
+    width: 100%;
+}
+
 textarea.text {
     height: 300px;
 }
@@ -219,6 +224,7 @@ label {
 
 .partSelector {
     text-align: left;
+    display: flex;
 }
 
 input[type=number] {
@@ -289,7 +295,6 @@ input[type=submit]{
 }
 
 #videos{
-    overflow-y: scroll;
     display: flex;
     flex-flow: row wrap;
     align-content: space-between;
@@ -380,3 +385,30 @@ input[type=submit]{
     border-radius: 9px;
   }
 
+
+  /* The alert message box */
+.alert {
+    background-color: #f44336; /* Red */
+    color: white;
+    width: 100%;
+    height: fit-content;
+  }
+
+  .alert_success {
+    background-color: green; /* Red */
+    color: white;
+    width: 100%;
+    height: fit-content;
+  }
+
+  /* The close button */
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  

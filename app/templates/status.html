@@ -51,19 +51,20 @@
             <div class="release">
                 <br>
                 {% if video_status == "finished" %}
-                <li>Stock Footage used: {stock_footage}</li>
-                <img class="video_image" src="../static/minecraft_cover.png" alt="Image of content being generated">
-                <li>Number of Characters: {characters}</li>
+                <li>Stock Footage used: {{stock_footage}}</li>
+                <img class="video_image" src="../static/{{cover}}" alt="Image of content being generated">
+                <li>Number of Characters: {{characters}}</li>
                 <!-- <li>Reddit Post Used: {post}</li> -->
                 <a class="status_video" href="{{video}}">Status: Video Finshed!</a>
                 <p><span style="color: red;">Note:</span> This link will only be valid for 10 minutes, after this time period the video will become unaccessible</p>
                 {% elif video_status == "started" %}
 
-                <li>Stock Footage used: {stock_footage}</li>
-                <img class="video_image" src="../static/minecraft_cover.png" alt="Image of content being generated">
-                <li>Number of Characters: {characters}</li>
+                <li>Stock Footage used: {{stock_footage}}</li>
+                <img class="video_image" src="../static/{{cover}}" alt="Image of content being generated">
+                <li>Number of Characters: {{characters}}</li>
                 <!-- <li>Reddit Post Used: {post}</li> -->
                 <p class ="status_video">Status: Generating...</p>
+                <p>This process will take around 3-5 minutes! Refresh the page to see if its finished!</p>
                 <p><span style="color: red;">Note:</span> On completion, there will be a embedded link to access your video. This link will only be valid for 10 minutes.</p>
 
                 {% else %}
