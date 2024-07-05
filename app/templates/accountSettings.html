@@ -47,9 +47,16 @@
 
     <section style="background-color: #fff; height: 870px">
             <div class="sideNav">
+                <div class="user-img">
+                    <img src="static/userProfile.png" id="photo" height="80px" width="80px">
+                    <input type="file" id="file">
+                    <label for="file"><img src="static/cam.png" height="10px" width="10px" id="uploadbtn"></label>
+                </div>
+                <div style="padding-top: 40px;">
                 <a href="{{url_for('client_page.accountSettings')}}"><li style="color: #346DFF; font-weight: 500; background-color: #A2B9F4;">Account Settings</li></a>
                 <a href="{{url_for('client_page.premiumSubscriptions')}}"><li>Premium Subscriptions</li></a>
                 <a href="{{url_for('client_page.billingHistory')}}"><li>Billing History</li></a>
+                </div>
             </div>
 
             <div class="accountSettingsParent">
@@ -75,14 +82,18 @@
                             <input type="text" id="username" value="Username">
                             <br>
                             <br>
-                            <input type="submit" value="Submit">
+                            <input type="submit" value="Save">
                         </form>
+
+
                     </div> 
                 </div>
             </div>
     </section>
 
     <script>
+
+
         let subMenu = document.getElementById("subMenu");
 
         function toggleMenu() {
@@ -94,6 +105,26 @@
             this.select();
         });
         });
+
+
+        
+        const imgDiv= document.querySelector('.user-img');
+        const img = document.querySelector('#photo');
+        const file = document.querySelector('#file'); 
+        const uploadebtn = document.querySelector('#uploadbtn');
+
+        file.addEventListener( 'change', function(){ 
+        const chosedfile = this.files[0];
+        if(chosedfile){
+            const reader = new FileReader();
+            reader.addEventListener('load', function(){
+                 img.setAttribute('src', reader.result);
+            })
+            reader.readAsDataURL (chosedfile);
+        
+        }
+
+        })
     </script>
 </body>
 </html>
