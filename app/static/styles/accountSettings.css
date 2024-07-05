@@ -408,3 +408,36 @@ input[type=submit]{
         border: 2px solid #57a5f3;
     } 
 
+    .user-img{
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 30px;
+        margin: 1% 30%;
+    }
+
+    #photo {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+    }
+
+    #file {
+        display: none;
+    }
+
+    #uploadbtn {
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        cursor: pointer;
+        color: #fff;
+        background-color: #fff;
+        box-shadow: 2px 4px 4px rgba(109, 109, 109, 0.644);
+        transform: translateX(-90%);
+        margin-top: 65px;
+    }
+
