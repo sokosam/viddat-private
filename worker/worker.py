@@ -26,14 +26,14 @@ def script_async(params):
         session = boto3.Session(aws_access_key_id="AKIAZQ3DTVZZEIHYE4HL", aws_secret_access_key="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")
         client = session.client("s3")
         with open(params["ID"]+".zip", "rb") as f:
-            client.upload_fileobj(f, "tsbckt", params["ID"]+".zip")
+            client.upload_fileobj(f, "tsbckt",  r"vids/"+ params["ID"]+".zip")
             print("File: "+ params["ID"]+".zip " + "uploaded by user: " + params["USERID"], flush=True)
         
         shutil.rmtree("temp"+params["ID"])
         os.remove(params["ID"]+".zip")
         url = client.generate_presigned_url("get_object", Params=
                                         {'Bucket': "tsbckt",
-                                        "Key": params["ID"]+".zip"},
+                                        "Key": r"vids/" + params["ID"]+".zip"},
                                         ExpiresIn = 600)
         print(url,flush=True)
     except Exception as e:
