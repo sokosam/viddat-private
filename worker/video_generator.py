@@ -118,7 +118,13 @@ class web_gen:
         if title: gender += textProcessing.getGender(title)
 
         if not stock_footage or stock_footage=="":
-            stock_footage = os.path.join('stock_footage',choice(os.listdir("stock_footage")))
+            drive = choice(os.listdir("stock_footage"))
+            stock_video = choice(os.listdir(os.path.join("stock_footage", drive)))
+            combined = os.path.join(drive, stock_video)
+            stock_footage = os.path.join('stock_footage',combined)
+        else:
+            stock_footage = os.path.join(stock_footage, choice(os.listdir(stock_footage)))
+
 
         title_end, end, audio_str = self.generate_audio(output_path, text, title, gender)
 

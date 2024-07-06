@@ -22,7 +22,13 @@ def client():
             title = request.form.get('title')
             part = request.form.get('part')
             video = request.form.get('videos')
-            gender = int(request.form.get('gender'))
+            if not video: video = random.choice([r"stock_footage/minecraft/",
+                                                 r"stock_footage/cooking/"])
+
+            if request.form.get("gender"):
+                gender = int(request.form.get('gender'))
+            else:
+                gender = 0
 
             user_id = current_user.get_id() 
 
@@ -65,7 +71,7 @@ def premiumSubscriptions():
 def billingHistory():
     return render_template('billingHistory.html', user=current_user)
 
-@client_page.route('/status', methods=["GET"])
+@client_page.route('/client/status', methods=["GET"])
 @login_required
 def status():
     if request.method =="GET":
@@ -75,8 +81,8 @@ def status():
         job = queue.fetch_job(user)
 
         videos = {
-            r"stock_footage/cooking.mp4": ("Cooking","cooking.webp"),
-            r"stock_footage/minecraft.mp4": ("Minecraft", "minecraft_cover.png"),
+            r"stock_footage/cooking/": ("Cooking","cooking.webp"),
+            r"stock_footage/minecraft/": ("Minecraft", "minecraft_cover.png"),
         }
 
         if job:
@@ -91,6 +97,10 @@ def status():
         else:
             video = "No Video Currently Generating!"
             video_status = "nothing"
+            return render_template("status.html",
+                            user=current_user,
+                            video_status=video_status,
+                            video=video)
         # except Exception as e:
         #     print(e, flush=True)
     return render_template("status.html",
