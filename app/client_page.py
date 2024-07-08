@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, session, current_app, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user, current_user
 import time
+from __init__ import db
+from PIL import Image
 
 import random
 import string
@@ -56,9 +58,40 @@ def client():
             flash("Your videos now generating! Head over to Video Status to retrieve it!",category="success")
     return render_template('clientPage.html', user=current_user)
 
-@client_page.route('/accountSettings')
+@client_page.route('/client/accountSettings', methods=["GET","POST"])
 @login_required
 def accountSettings():
+    if request.method == "POST":
+        aws_secret = request.form.get("secret")
+        aws_access =request.form.get('access')
+        user_name = request.form.get('username')
+        profile_picture = request.files['pfp']
+
+        if aws_secret and len(aws_secret) > 128:
+            flash("bad")
+        elif aws_access and len(aws_access) >128:
+            flash("trash")
+        elif user_name and len(user_name) > 50:
+            flash("dookiebutter")
+
+        else:
+            current_user.aws_secret = aws_secret
+            current_user.aws_access = aws_access
+            current_user.username = user_name
+            print("hello",flush=True)
+            try:
+                pil_image = Image.open(profile_picture)
+                if pil_image.format not in ("PNG", "JPEG", "JPG"):
+                    raise TypeError("Trash extension")
+                queue = current_app.config['QUEUE']
+                filename = generate_random_string(25) + current_user.get_id()
+                current_user.profile_picture=r"https://tsbckt.s3.amazonaws.com/pfp/" + filename + "." +pil_image.format.lower()
+                queue.enqueue("worker.update_pfp", pfp=pil_image, filename=filename, format = pil_image.format.lower())
+            except Exception as e:
+                print(e, flush=True)
+
+            db.session.commit()
+            flash("we did it!")
     return render_template('accountSettings.html', user=current_user)
 
 @client_page.route('/premiumSubscriptions')

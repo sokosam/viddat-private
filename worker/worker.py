@@ -1,6 +1,7 @@
 from rq import Queue, Worker
 from redis import Redis
 from video_generator import web_gen
+from PIL import Image
 import os
 import zipfile
 import boto3
@@ -39,3 +40,15 @@ def script_async(params):
     except Exception as e:
         print(e, flush=True)
     return url
+
+def update_pfp(pfp, filename, format):
+    try:
+        session = boto3.Session(aws_access_key_id="AKIAZQ3DTVZZEIHYE4HL", aws_secret_access_key="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")
+        client = session.client("s3")
+        pfp.save(f"{filename}.{format}")
+        with open(f"{filename}.{format}", "rb") as f:
+            client.upload_fileobj(f, 'tsbckt', r"pfp/" + f"{filename}.{format}")
+        os.remove(f"{filename}.{format}")
+        print("Uploaded profile picture: ", filename,".",format)
+    except Exception as e:
+        print(e, flush=True)

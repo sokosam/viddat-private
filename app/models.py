@@ -7,6 +7,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(200), unique=True)
     password = db.Column(db.String(105))
     emailConfirm = db.Column(db.Boolean)
+    username = db.Column(db.String(50))
+    aws_secret = db.Column(db.String(128))
+    aws_access = db.Column(db.String(128))
+    profile_picture = db.Column(db.String(256))
     current_video = None
-
-    

@@ -177,6 +177,7 @@ input[type=submit]:hover{
     background-color: #f44336; /* Red */
     color: white;
     width: 420px;
+    margin-bottom: 20px;
   }
   
   /* The close button */

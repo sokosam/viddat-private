@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/accountSettings.css')}}" />
-    <title>VidBot Home</title>
+    <title>Viddat Home</title>
 </head>
 <body>
     <header>
@@ -17,8 +17,8 @@
                         <li><a href="{{url_for('auth.login')}}" style="margin-right: 20px;">Profile</a></li>
                     </ul>
                     <div class="profile" onclick="toggleMenu()">
-                        <img src="static/userProfile.png" class="user-pic" width="55px" height="55px">
-                        <img src="static/downArrow.svg" width="14" height="14" class="downArrow"> 
+                        <img src="{{current_user.profile_picture}}" class="user-pic" width="55px" height="55px">
+                        <img src="../static/downArrow.svg" width="14" height="14" class="downArrow"> 
                     </div>
 
                     <div class="sub-menu-wrap" id="subMenu">
@@ -29,7 +29,7 @@
                             <div class="user-info ">
                                 <a href="{{url_for('client_page.accountSettings')}}">
                                     <div class="account-settings">
-                                        <img src="static/settings.png" class="setting_gear" width="20px" height="20px" style="margin-top: 3px;">
+                                        <img src="../static/settings.png" class="setting_gear" width="20px" height="20px" style="margin-top: 3px;">
                                         <h3 style="margin-left: 4px;">Account Settings</h3>
                                     </div>
                                 </a>
@@ -46,11 +46,44 @@
     </header>
 
     <section style="background-color: #fff; height: 870px">
+        <form enctype=multipart/form-data method="POST">
             <div class="sideNav">
                 <div class="user-img">
-                    <img src="static/userProfile.png" id="photo" height="80px" width="80px">
-                    <input type="file" id="file">
-                    <label for="file"><img src="static/cam.png" height="10px" width="10px" id="uploadbtn"></label>
+                        <img src="{{current_user.profile_picture}}" id="photo" height="80px" width="80px">
+                        <input 
+                            type="file" 
+                            class="file-uploader"
+                            onchange="upload()"
+                            accept="image/*"
+                            id="pfp"
+                            name="pfp"
+                            >
+                    <label for="file"><img src="../static/cam.png" height="10px" width="10px" id="uploadbtn"></label>
+                    <script>
+                        function upload() {
+                            const fileUploadInput = document.querySelector('.file-uploader');
+
+                            // using index [0] to take the first file from the array
+                            const image = fileUploadInput.files[0];
+
+                            // check if the file selected is not an image file
+                            if (!image.type.includes('image')) {
+                            return alert('Only images are allowed!');
+                            }
+
+                            // check if size (in bytes) exceeds 10 MB
+                            if (image.size > 10_000_000) {
+                            return alert('Maximum upload size is 10MB!');
+                            }     
+                            const fileReader = new FileReader();
+                            fileReader.readAsDataURL(image);
+
+                            fileReader.onload = (fileReaderEvent) => {
+                                const url = URL.createObjectURL(image)
+                                document.getElementById("photo").src=url
+                            }
+                        }                                 
+                    </script>
                 </div>
                 <div style="padding-top: 40px;">
                 <a href="{{url_for('client_page.accountSettings')}}"><li style="color: #346DFF; font-weight: 500; background-color: #A2B9F4;">Account Settings</li></a>
@@ -68,7 +101,6 @@
                         <h1 style="text-align: left; font-size: 20px;">Account Info</h1>
                     </div>
                     <div style="padding: 30px;">
-                        <form action="/action_page.php">
                             <label for="secret">AWS Secret Code</label>
                             <br>
                             <input type="text" id="secret">
@@ -79,16 +111,14 @@
                             <br><br>
                             <label for="username">Username</label>
                             <br>
-                            <input type="text" id="username" value="Username">
+                            <input type="text" id="username" value="username">
                             <br>
                             <br>
                             <input type="submit" value="Save">
-                        </form>
-
-
                     </div> 
                 </div>
             </div>
+        </form>
     </section>
 
     <script>
