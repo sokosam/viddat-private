@@ -42,6 +42,12 @@ nav {
     cursor: pointer;
 }
 
+.user-pic{
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+}
+
 .sub-menu-wrap {
     max-height: 0px;
     border-radius: 7px;

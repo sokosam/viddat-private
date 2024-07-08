@@ -48,7 +48,7 @@ def sign_up():
         email = request.form.get("email")
         password = request.form.get('password')
         password_confirm = request.form.get('confirm')
-
+        session['email'] = email
         user = User.query.filter_by(email=email).first()
         token = s.dumps(email,  salt='email_confirm')
 
@@ -67,13 +67,12 @@ def sign_up():
         elif password != password_confirm:
             flash("Passwords do not match!", category="error")
         else:
-            new_user = User(email=email, emailConfirm=False, password = generate_password_hash(password, method='pbkdf2:sha256'))
+            new_user = User(email=email, emailConfirm=False, password = generate_password_hash(password, method='pbkdf2:sha256'), username="default", aws_secret="", aws_access="", profile_picture="../static/userProfile.png")
             db.session.add(new_user)
             db.session.commit()
             link = url_for('auth.confirm_email', token=token, _external=True)
             msg = Message(subject='Confirm Your Account', body=f'Please confirm your email: ' +link ,sender="viddatconfirm@gmail.com",recipients=[email])
             mailer.send(msg)
-            flash("Account registered", category="success!")
             return redirect(url_for("auth.verifyEmail"))
 
     return render_template("signUp.html", user=current_user)
@@ -89,7 +88,6 @@ def confirm_email(token):
     user.emailConfirm = True
     db.session.commit()
     login_user(user, remember=True)
-    session['email'] = email
     return render_template('emailVerified.html', user=current_user)
 
 @auth.route('/confirm_email/verify')
