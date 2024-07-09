@@ -42,7 +42,12 @@ def client():
                 "USERID": user_id,
                 "VIDEO": video,
                 "GENDER": gender,
+                "USERNAME": current_user.username,
+                "THUMBNAIL_URL": current_user.profile_picture,
+                "AWS_SECRET": current_user.aws_secret,
+                "AWS_ACCESS": current_user.aws_access
             }
+            print(params["AWS_ACCESS"] +" " + params["AWS_SECRET"], flush=True)
 
             queue = current_app.config['QUEUE']
 
@@ -78,6 +83,7 @@ def accountSettings():
             current_user.aws_secret = aws_secret
             current_user.aws_access = aws_access
             current_user.username = user_name
+            print(aws_secret)
             print("hello",flush=True)
             try:
                 pil_image = Image.open(profile_picture)
