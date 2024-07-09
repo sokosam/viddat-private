@@ -51,7 +51,7 @@ class web_gen:
                     for line in infile:
                         outfile.write(line)
 
-    def generate_audio(self, output_path, text, title, gender ,speed = "120"):
+    def generate_audio(self, output_path, text, title, gender, aws_access, aws_secret,speed = "120"):
         time = 0
 
         if gender < 0: gender = "Joanna"
@@ -68,7 +68,7 @@ class web_gen:
         concat_audio = []
         concat_SRT = []
 
-        polly = PollyVTT(params = {"AWS_ACCESS_KEY": r"AKIAZQ3DTVZZFAIXPFKK", "AWS_SECRET_KEY": r"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"})
+        polly = PollyVTT(params = {"AWS_ACCESS_KEY": aws_access, "AWS_SECRET_KEY": aws_secret})
 
         if title:
             time += polly.generate(
@@ -112,7 +112,7 @@ class web_gen:
         
 
 
-    def generate_video(self, text, title, red_text, output_path, output_name, start_time= 0, stock_footage = r'stock_footage/cooking.mp4', music_choice= None, delay= 0,gender = None, style= "FontName=OPTIGranby-ElephantAgency,FontSize=20,Alignment=10,Shadow=1,Spacing=-1"):
+    def generate_video(self, text, title, red_text, output_path, output_name, thumbnail_url, aws_access, aws_secret, user_name="VIDDAT.CA",start_time= 0, stock_footage = r'stock_footage/cooking.mp4', music_choice= None, delay= 0,gender = None, style= "FontName=OPTIGranby-ElephantAgency,FontSize=20,Alignment=10,Shadow=1,Spacing=-1"):
 
         if not gender: gender = textProcessing.getGender(text) 
         if title: gender += textProcessing.getGender(title)
@@ -126,14 +126,15 @@ class web_gen:
             stock_footage = os.path.join(stock_footage, choice(os.listdir(stock_footage)))
 
 
-        title_end, end, audio_str = self.generate_audio(output_path, text, title, gender)
-
+        title_end, end, audio_str = self.generate_audio(output_path, text, title, gender, aws_secret=aws_secret, aws_access=aws_access)
+        
         print(stock_footage)
 
         try:
             probe = ffmpeg.probe(stock_footage)
         except ffmpeg.Error as e:
             print(e.stderr, flush=True)
+
         video_streams = [stream for stream in probe["streams"] if stream["codec_type"] == "video"]
         w,h = int(video_streams[0]['width']), int(video_streams[0]['height'])
 
@@ -159,7 +160,7 @@ class web_gen:
         out = os.path.join(output_path, output_name)    
 
         if title:
-            thumbnail_generator(text= title,red_text=red_text, output_path = output_path, file_name ='title.mp3',newSize=newH)
+            thumbnail_generator(text= title,red_text=red_text, output_path = output_path, file_name ='title.mp3',newSize=newH, url=thumbnail_url,user_name=user_name)
             command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -i {stock_footage} -i {os.path.join(output_path,"title.mp3.png")} -i "concat:{audio_str}" -filter_complex "[0:v][1:v] overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2:enable='between(t,0,{title_end})',subtitles={subtitle_body_path}:force_style='{style}'" -shortest -map 2:a:0 -to {end} {out} -hide_banner -loglevel error -y"""
         else:
             command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -i {stock_footage} -i "concat:{audio_str}" -filter_complex "[0:v] subtitles={subtitle_body_path}:force_style='{style}'" -shortest -map 1:a:0 -to {end} {out} -hide_banner -loglevel error -y"""

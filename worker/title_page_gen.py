@@ -1,7 +1,10 @@
 import os
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageOps
+import requests
+from io import BytesIO
 
-def thumbnail_generator(text, output_path, file_name ="out", red_text = False, newSize = None, name= "NAME", picture_path = "default.png"):
+
+def thumbnail_generator(text, output_path, file_name ="out", red_text = False, newSize = None, user_name= "NAME", picture_path = "default.png", url=None):
         #textwrap
         dir_path = os.path.dirname(os.path.realpath(__file__))
         conjoin = lambda a : os.path.join(dir_path,r"thumbnail_static",a ) 
@@ -44,7 +47,10 @@ def thumbnail_generator(text, output_path, file_name ="out", red_text = False, n
         draw.rounded_rectangle([x, y, x + width, y + height], fill="white", radius=12)
 
         # Load and resize the overlay image
-        overlay = Image.open(conjoin(picture_path)).convert("RGBA")
+        if url and url != r"../static/userProfile.png":
+            overlay= thumbnail_image(url)
+        else:
+            overlay = Image.open(conjoin(picture_path)).convert("RGBA")
         new_size = (50 , 50)
         resized_overlay = overlay.resize(new_size)
         trbg.paste(resized_overlay, (logoXPos , logoYPos ), resized_overlay)
@@ -73,13 +79,13 @@ def thumbnail_generator(text, output_path, file_name ="out", red_text = False, n
         #Add text to the image
         Helvetica = ImageFont.truetype(conjoinFont("Helvetica-Bold-Font.ttf"), size = 27)
         Verdana = ImageFont.truetype(conjoinFont("verdana.ttf"), size= 20)
-        draw.text((posterX  + 8 , posterY - 5), name, (0, 0, 0), font=Verdana)
+        draw.text((posterX  + 8 , posterY - 5), user_name, (0, 0, 0), font=Verdana)
 
         #verified badge
         verified_overlay = Image.open(conjoin("verified.png")).convert("RGBA")
         new_awards_size = (22, 22)
         resized_verified_overlay = verified_overlay.resize(new_awards_size)
-        trbg.paste(resized_verified_overlay, (int(posterX + Verdana.getlength(text=name) + 12), posterY - 3 ), resized_verified_overlay)     
+        trbg.paste(resized_verified_overlay, (int(posterX + Verdana.getlength(text=user_name) + 12), posterY - 3 ), resized_verified_overlay)     
 
         #award overlay
         awards_overlay = Image.open(conjoin("awards.png"))
@@ -106,3 +112,20 @@ def thumbnail_generator(text, output_path, file_name ="out", red_text = False, n
 
         # Save the output image
         trbg.save(os.path.join(output_path, f"{file_name}.png"))
+
+
+def thumbnail_image(url):
+    response = requests.get(url)
+    im = Image.open(BytesIO(response.content))
+
+    im = im.resize((120, 120))
+    bigsize = (im.size[0] * 3, im.size[1] * 3)
+    mask = Image.new('L', bigsize, 0)
+    draw = ImageDraw.Draw(mask) 
+    draw.ellipse((0, 0) + bigsize, fill=255)
+    mask = mask.resize(im.size, Image.LANCZOS)
+    im.putalpha(mask)
+
+    output = ImageOps.fit(im, mask.size, centering=(0.5, 0.5))
+    output.putalpha(mask)
+    return output
