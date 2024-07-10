@@ -73,11 +73,11 @@ def accountSettings():
         profile_picture = request.files['pfp']
 
         if aws_secret and len(aws_secret) > 128:
-            flash("bad")
+            flash("AWS Secret Key Cannot Exceed 128 Characters!", category="error")
         elif aws_access and len(aws_access) >128:
-            flash("trash")
+            flash("AWS Access Key Cannot Exceed 128 Characters!", category="error")
         elif user_name and len(user_name) > 50:
-            flash("dookiebutter")
+            flash("Username Cannot Exceed 50 Characters!" ,category="error")
 
         else:
             current_user.aws_secret = aws_secret
@@ -97,7 +97,7 @@ def accountSettings():
                 print(e, flush=True)
 
             db.session.commit()
-            flash("we did it!")
+            flash("Profile Update Success!")
     return render_template('accountSettings.html', user=current_user)
 
 @client_page.route('/premiumSubscriptions')
