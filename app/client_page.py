@@ -58,7 +58,7 @@ def client():
                 return redirect(url_for('client_page.client'))
 
             current_user.current_video = params["ID"]
-            queue.enqueue("worker.script_async", params,job_id=user_id)
+            queue.enqueue("worker.script_async", params,job_id=user_id, job_timeout=9999)
             print(user_id, "attempted to start a job. \n STATUS: SUCCESS", flush=True)
             flash("Your videos now generating! Head over to Video Status to retrieve it!",category="success")
     return render_template('clientPage.html', user=current_user)
