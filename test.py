@@ -15,4 +15,4 @@
 
 
 from worker.title_page_gen import thumbnail_generator
-thumbnail_generator(text="hi", output_path="", url=r"../static/userProfile.png")
+thumbnail_generator(text="hi", output_path="", url=r"https://tsbckt.s3.amazonaws.com/pfp/7WiYW4MZ2VjSZqZseoF4ajIkI1.png")

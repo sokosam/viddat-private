@@ -46,9 +46,13 @@ def thumbnail_generator(text, output_path, file_name ="out", red_text = False, n
         # Draw a rounded rectangle with white fill color
         draw.rounded_rectangle([x, y, x + width, y + height], fill="white", radius=12)
 
+
         # Load and resize the overlay image
         if url and url != r"../static/userProfile.png":
-            overlay= thumbnail_image(url)
+            try:
+                overlay= thumbnail_image(url)
+            except Exception as e:
+                overlay = Image.open(conjoin(picture_path)).convert("RGBA")
         else:
             overlay = Image.open(conjoin(picture_path)).convert("RGBA")
         new_size = (50 , 50)

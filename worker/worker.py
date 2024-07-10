@@ -31,6 +31,7 @@ def script_async(params):
                             user_name= params["USERNAME"],
                             aws_access = params["AWS_ACCESS"],
                             aws_secret = params["AWS_SECRET"])
+        
         with zipfile.ZipFile(params["ID"]+".zip", "w") as zfile:
             zfile.write(os.path.join("temp"+params["ID"], "video.mp4"), arcname="video.mp4")
 
@@ -50,6 +51,7 @@ def script_async(params):
         print(url,flush=True)
     except Exception as e:
         print(e, flush=True)
+        return "Error!"
     return url
 
 def update_pfp(pfp, filename, format):
