@@ -41,9 +41,31 @@
                         </div>
                     </div>
                 </nav>
+                {% with messages = get_flashed_messages(category_filter=["error"])%}
+                {% if messages%}
+                    {% for message in messages%}
+                    <div class="alert">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        {{message}}
+                    </div>
+                    {%endfor%}
+                    {%endif%}
+                    {%endwith%}
+                {% with messages = get_flashed_messages(category_filter=["success"])%}
+                {% if messages%}
+                    {% for message in messages%}
+                    <div class="alert_success">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        {{message}}
+                    </div>
+                    {%endfor%}
+                    {%endif%}
+                    {%endwith%}
             </header>
         </div>
     </header>
+    
+    
 
     <section style="background-color: #fff; height: 870px">
         <form enctype=multipart/form-data method="POST">
@@ -94,24 +116,24 @@
 
             <div class="accountSettingsParent">
                 <h1 style="text-align: left; font-size: 30px;">Account Settings</h1>
-                <p style="text-align: left; padding-bottom: 30px; font-weight: 300; font-size: 18px;">View and update your account details, profile and more.</p>
-
+                <p style="text-align: left; font-weight: 300; font-size: 18px;">View and update your account details, profile and more.</p>
+                <p style="text-align: left; padding-bottom: 30px; font-weight: 300; font-size: 18px;"> Note: If you leave a field blank, it will not update whilst others will! </p>
                 <div class="accountSettingsChild">
                     <div style="border-bottom: 1px solid #D3D3D3; padding: 20px 30px;">
                         <h1 style="text-align: left; font-size: 20px;">Account Info</h1>
                     </div>
                     <div style="padding: 30px;">
-                            <label for="secret">AWS Secret Code</label>
-                            <br>
-                            <input type="text" id="secret" name="secret">
-                            <br><br>
                             <label for="access">AWS Access Code</label>
                             <br>
-                            <input type="text" id="access" name="access">
+                            <input type="password" id="access" name="access" placeholder="Required">
+                            <br><br>
+                            <label for="secret">AWS Secret Code</label>
+                            <br>
+                            <input type="password" id="secret" name="secret" placeholder="Required"> 
                             <br><br>
                             <label for="username">Username</label>
                             <br>
-                            <input type="text" id="username" name="username" value="username">
+                            <input type="text" id="username" name="username" value="{{current_user.username}}">
                             <br>
                             <br>
                             <input type="submit" value="Save">
