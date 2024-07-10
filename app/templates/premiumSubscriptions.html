@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/clientPage.css')}}" />
-    <title>VidBot Home</title>
+    <title>Viddat Home</title>
 </head>
 <body>
     <header>
         <div id="navbar">
             <header>    
                 <nav>
-                    <a href="{{ url_for('client_page.client') }}" class="logo"><h1 style="color: black;">VidBot</h1></a>
+                    <a href="{{ url_for('client_page.client') }}" class="logo"><h1 style="color: black;">Viddat</h1></a>
                     <ul class="nav_links">
                         <li><a href="{{url_for('views.pricing')}}">Statistics</a></li>
                         <li><a href="{{url_for('auth.login')}}" style="margin-right: 20px;">Profile</a></li>

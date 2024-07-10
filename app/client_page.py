@@ -47,10 +47,8 @@ def client():
                 "AWS_SECRET": current_user.aws_secret,
                 "AWS_ACCESS": current_user.aws_access
             }
-            print(params["AWS_ACCESS"] +" " + params["AWS_SECRET"], flush=True)
 
             queue = current_app.config['QUEUE']
-
             job = queue.fetch_job(user_id)
             if job and job.get_status() == 'started':
                 print(user_id, "attempted to start a job. \n STATUS: FAIL, user already has a job running", flush=True)
@@ -80,14 +78,15 @@ def accountSettings():
             flash("Username Cannot Exceed 50 Characters!" ,category="error")
 
         else:
-            current_user.aws_secret = aws_secret
-            current_user.aws_access = aws_access
+            if len(aws_secret) >0:
+                current_user.aws_secret = aws_secret 
+            if len(aws_access) > 0:
+                current_user.aws_access = aws_access
             current_user.username = user_name
-            print(aws_secret)
-            print("hello",flush=True)
             try:
                 pil_image = Image.open(profile_picture)
                 if pil_image.format not in ("PNG", "JPEG", "JPG"):
+                    flash("Image Type Not Accepted (Must Be PNG, JPEG, or JPG)")
                     raise TypeError("Trash extension")
                 queue = current_app.config['QUEUE']
                 filename = generate_random_string(25) + current_user.get_id()
@@ -95,7 +94,6 @@ def accountSettings():
                 queue.enqueue("worker.update_pfp", pfp=pil_image, filename=filename, format = pil_image.format.lower())
             except Exception as e:
                 print(e, flush=True)
-
             db.session.commit()
             flash("Profile Update Success!")
     return render_template('accountSettings.html', user=current_user)
