@@ -164,9 +164,9 @@ class web_gen:
                 thumbnail_generator(text= title,red_text=red_text, output_path = output_path, file_name ='title.mp3',newSize=newH, url=thumbnail_url,user_name=user_name)
             except Exception as e:
                 raise Exception("Error generating title picture! Probably an issue with the profile picture.")
-            command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -i {stock_footage} -i {os.path.join(output_path,"title.mp3.png")} -i "concat:{audio_str}" -filter_complex "[0:v][1:v] overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2:enable='between(t,0,{title_end})',subtitles={subtitle_body_path}:force_style='{style}'" -shortest -map 2:a:0 -to {end} {out} -y""" #-hide_banner -loglevel error 
+            command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -to {end} -i {stock_footage} -i {os.path.join(output_path,"title.mp3.png")} -i "concat:{audio_str}" -filter_complex "[0:v][1:v] overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2:enable='between(t,0,{title_end})',subtitles={subtitle_body_path}:force_style='{style}'" -shortest -map 2:a:0 {out} -y""" #-hide_banner -loglevel error 
         else:
-            command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -i {stock_footage} -i "concat:{audio_str}" -filter_complex "[0:v] subtitles={subtitle_body_path}:force_style='{style}'" -shortest -map 1:a:0 -to {end} {out} -y""" # -hide_banner -loglevel error 
+            command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -to {end} -i {stock_footage} -i "concat:{audio_str}" -filter_complex "[0:v] subtitles={subtitle_body_path}:force_style='{style}'" -shortest -map 1:a:0 {out} -y""" # -hide_banner -loglevel error 
         # command = (
         #     "ffmpeg",
         #     "-stream_loop", "-1",
