@@ -23,7 +23,7 @@ header {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 30px 5%;
+    padding: 15px 5%;
 }
 
 .logo {
@@ -51,14 +51,14 @@ button {
     background: rgb(43,104,197);
     background: linear-gradient(309deg, rgba(43,104,197,1) 0%, rgba(219,1,255,1) 100%); 
     border: none;
-    border-radius: 50px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: all 0.3s ease 0s;
+    transition: all 1s ease 0s;
     color: #fff;
 }
 
 button:hover {
-    border: 1px solid rgb(220, 220, 220);
+    background: linear-gradient(309deg, rgba(43,104,197,1) 0%, rgb(227, 85, 252) 100%); 
 }
 
 .landing {
@@ -105,7 +105,6 @@ button:hover {
 .featuresSection {
     background-color: #686EFC;
     width: 100%;
-    z-index: -1;
     margin-top: -60px;
     padding:300px;
     padding-top: 220px;
@@ -166,8 +165,75 @@ button:hover {
 }
 
 .howItWorksSection {
-    background: #fff;
+    background: #F7F4FD;
+    padding: 85px 10%;
+    width: 100%;
 }
+
+.howItWorksSection h1{
+    font-size: 60px;
+    color: #040222;
+}
+
+
+.howItWorksSection p{
+    color: #040222;
+    font-size: 25px;
+}
+
+.stepCardParent {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 30px 30px;
+}
+
+.stepCard {
+    width: 444px;
+    text-align: left;
+    background-color: #fff;
+    padding: 24px 32px;
+    -webkit-box-shadow: -1px 10px 20px -11px rgba(199,199,199,1);
+    -moz-box-shadow: -1px 10px 20px -11px rgba(199,199,199,1);
+    box-shadow: -1px 10px 20px -11px rgba(199,199,199,1);
+    border-radius: 4px;
+    transition: all 0.5s ease 0s;
+}
+
+.stepCard h2, h3{
+    font-size: 22px;
+    color: #040222;
+}
+
+.stepCard h2 {
+    color: #C0C0C0;
+}
+
+.stepCard h3 {
+    padding-top: 15px;
+}
+
+.stepCard p {
+    padding-top: 10px;
+    font-size: 20px;
+    color: #040222;
+}
+
+.imgContainer img{
+    display:block;
+    margin:auto;
+}
+
+.textCard {
+    height: 175px;
+}
+
+.stepCard:hover {
+    -webkit-box-shadow: -1px 10px 20px -11px rgba(143,143,143,1);
+-moz-box-shadow: -1px 10px 20px -11px rgba(143,143,143,1);
+box-shadow: -1px 10px 20px -11px rgba(143,143,143,1);
+}
+
 
 
 

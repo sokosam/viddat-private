@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/main.css')}}" />
-    <title>Viddat</title>
+    <title>VidBot</title>
     <script>
         window.onscroll = function() {myFunction()};
         
@@ -23,7 +23,7 @@
 <body>
     <div id="navbar" class="navbar">
         <header>
-            <a href="/" class="logo"><h1>Viddat</h1></a>
+            <a href="/" class="logo"><h1>VidDat</h1></a>
             <nav>
                 <ul class="nav_links">
                     <li><a href="{{url_for('views.emailVerified')}}">Pricing</a></li>
@@ -75,11 +75,56 @@
                 <a class="featuresCta" href="{{url_for('auth.sign_up')}}"><button>Get Started</button></a>
                 </div>
             </div>
-       </div>
-       
-       <div class="howItWorksSection">
 
+
+            <div class="howItWorksSection">
+                <div>
+                    <p>How VidDat Works</p>
+                    <h1>Three Steps to Easy Video Content Creation</h1>
+                </div>
+                <div class="stepCardParent">
+                    
+                    <div class="stepCard">
+                        <div class="textCard">
+                        <h2>Step 1:</h2>
+                        <h3>Enter Your Text</h3>
+                        <p>Input the title and main text you want to feature in your video. </p>
+                        </div>
+                        <div class="imgContainer">
+                            <img src="static/Text.png">
+                        </div>
+                    </div>
+                    <div class="stepCard">
+                        <div class="textCard">
+                            <h2>Step 2:</h2>
+                            <h3>Choose a Template</h3>
+                            <p>Select from a variety of engaging templates designed to captivate your audience.</p>
+                        </div>
+                        <div class="imgContainer">
+                            <div class="imgContainer">
+                                <img src="static/Vid.png">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stepCard">
+                        <div class="textCard">
+                            <h2>Step 3:</h2>
+                            <h3>Generate and Download</h3>
+                            <p>Simply press the generate button to download your new video.</p>
+                        </div>
+                        <div class="imgContainer">
+                            <div class="imgContainer">
+                                <img src="static/Generate.png">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
        </div>
+    </section>
+
+    <section>
+
     </section>
 </body>
 </html>
