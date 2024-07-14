@@ -20,6 +20,8 @@ def client():
             flash("Content must be atleast 100 characters", category="error")
         elif len(text) >5000:
             flash("Content cannot be greater than 5000 characters, try splitting it into parts!", category="error")
+        elif len(current_user.aws_secret) == 0 or len(current_user.aws_secret) == 0:
+            flash("AWS Secret and AWS Access Keys are required! Please head to account settings!")
         else:
             title = request.form.get('title')
             part = request.form.get('part')
@@ -56,7 +58,7 @@ def client():
                 return redirect(url_for('client_page.client'))
 
             current_user.current_video = params["ID"]
-            queue.enqueue("worker.script_async", params,job_id=user_id, job_timeout=9999)
+            queue.enqueue("worker.script_async", params,job_id=user_id, job_timeout=1800)
             print(user_id, "attempted to start a job. \n STATUS: SUCCESS", flush=True)
             flash("Your videos now generating! Head over to Video Status to retrieve it!",category="success")
     return render_template('clientPage.html', user=current_user)
@@ -76,7 +78,7 @@ def accountSettings():
             flash("AWS Access Key Cannot Exceed 128 Characters!", category="error")
         elif user_name and len(user_name) > 50:
             flash("Username Cannot Exceed 50 Characters!" ,category="error")
-
+        
         else:
             if len(aws_secret) >0:
                 current_user.aws_secret = aws_secret 
@@ -120,6 +122,9 @@ def status():
         videos = {
             r"stock_footage/cooking/": ("Cooking","cooking.webp"),
             r"stock_footage/minecraft/": ("Minecraft", "minecraft_cover.png"),
+            r"stock_footage/irl/":("IRL", "IRL.jpg"),
+            r"stock_footage/mirrors_edge": ("Mirrors Edge", "mirrorsedge.jpg"),
+            r"stock_footage/trackmania":("Trackmania", "trackmania.jpg")
         }
 
         if job:

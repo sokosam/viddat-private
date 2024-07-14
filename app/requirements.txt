@@ -9,3 +9,4 @@ SQLAlchemy==2.0.31
 Werkzeug==3.0.3
 psycopg2-binary==2.9.9
 Pillow==10.3.0
+Flask-SocketIO==5.3.6

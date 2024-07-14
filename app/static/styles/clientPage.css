@@ -404,6 +404,7 @@ input[type=submit]{
   .alert_success {
     background-color: green; /* Red */
     color: white;
+    padding: 10px;
     width: 100%;
     height: fit-content;
   }

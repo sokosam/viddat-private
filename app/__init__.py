@@ -5,6 +5,7 @@ from instance.secrets import getAppKey, getSQL, getEmailPWD
 from flask_mail import Mail, Message
 from rq import Queue
 from redis import Redis
+from flask_socketio import SocketIO
 
 db = SQLAlchemy()
 app = Flask(__name__)
@@ -23,6 +24,8 @@ log.setLevel(logging.ERROR)
 connection = Redis(host='redis', port =6379)
 app.config["CONNECTION"] = connection
 app.config['QUEUE'] = Queue(connection=connection)
+
+socketio = SocketIO(app,message_queue='redis://redis:6379')
 mailer = Mail(app)
 
 def create_app():
