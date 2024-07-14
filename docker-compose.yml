@@ -12,7 +12,7 @@ services:
         depends_on:
             - redis
             - web
-        cpus: "2"
+        cpus: "1"
         deploy:
             mode: replicated
             replicas: 2

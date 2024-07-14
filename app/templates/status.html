@@ -4,18 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/status.css')}}" />
-    <title>VidBot Home</title>
+    <title>Viddat Home</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var socket = io();
+
+            socket.on('task_complete', function(data) {
+                var li = document.createElement("li");
+                li.appendChild(document.createTextNode('Task ' + data.job_id + ' completed. Download URL: ' + data.url));
+                document.getElementById("messages").appendChild(li);
+            });
+
+            socket.on('task_error', function(data) {
+                var li = document.createElement("li");
+                li.appendChild(document.createTextNode('Task ' + data.job_id + ' failed. Error: ' + data.error));
+                document.getElementById("messages").appendChild(li);
+            });
+        });
+    </script>
 </head>
 <body>
     <header>
         <div id="navbar">
             <header>    
                 <nav>
-                    <a href="{{ url_for('client_page.client') }}" class="logo"><h1 style="color: black;">VidBot</h1></a>
+                    <a href="{{ url_for('client_page.client') }}" class="logo"><h1 style="color: black;">Viddat</h1></a>
                     <ul class="nav_links">
                         <li><a href="{{url_for('client_page.status')}}">Your Video</a></li>
                         <li><a href="{{url_for('views.pricing')}}">Statistics</a></li>
-                        <li><a href="{{url_for('auth.login')}}" style="margin-right: 20px;">Profile</a></li>
+                        <li><a href="{{url_for('client_page.accountSettings')}}" style="margin-right: 20px;">Profile</a></li>
                     </ul>
                     <div class="profile" onclick="toggleMenu()">
                         <img src="{{current_user.profile_picture}}" class="user-pic" width="55px" height="55px">
@@ -46,6 +64,7 @@
         </div>
     </header>
     <section class="status">
+
         <div class="status_video_wrapper">
             <h1>Your Video</h1>
             <div class="release">
@@ -75,6 +94,8 @@
                 </a>
                 {% endif %}
                 <br>
+
+                <ul id="messages"></ul>
             </div>
 
         </div>

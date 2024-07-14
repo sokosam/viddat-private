@@ -106,13 +106,13 @@ class web_gen:
     def fit_dimensions(self, w, h, video_path,output_path, output_name = "temp.mp4"):
         output = os.path.join(output_path, output_name)
         command = fr'ffmpeg -i {video_path} -vf "crop={w + 1}:{h}:{w}:0" {output} -y'
-        os.subprocess.run(command, shell=True)
+        subprocess.run(command, shell=True)
         os.remove(video_path)
         os.rename(output, video_path)
         
 
 
-    def generate_video(self, text, title, red_text, output_path, output_name, thumbnail_url, aws_access, aws_secret, user_name="VIDDAT.CA",start_time= 0, stock_footage = r'stock_footage/cooking.mp4', music_choice= None, delay= 0,gender = None, style= "FontName=OPTIGranby-ElephantAgency,FontSize=20,Alignment=10,Shadow=1,Spacing=-1"):
+    def generate_video(self, text, title, red_text, output_path, output_name, thumbnail_url, aws_access, aws_secret, user_name="VIDDAT.CA",start_time= randint(1,100), stock_footage = r'stock_footage/cooking.mp4', music_choice= None, delay= 0,gender = None, style= "FontName=OPTIGranby-ElephantAgency,FontSize=20,Alignment=10,Shadow=1,Spacing=-1"):
 
         if not gender: gender = textProcessing.getGender(text) 
         if title: gender += textProcessing.getGender(title)
@@ -164,9 +164,9 @@ class web_gen:
                 thumbnail_generator(text= title,red_text=red_text, output_path = output_path, file_name ='title.mp3',newSize=newH, url=thumbnail_url,user_name=user_name)
             except Exception as e:
                 raise Exception("Error generating title picture! Probably an issue with the profile picture.")
-            command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -to {end} -i {stock_footage} -i {os.path.join(output_path,"title.mp3.png")} -i "concat:{audio_str}" -filter_complex "[0:v][1:v] overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2:enable='between(t,0,{title_end})',subtitles={subtitle_body_path}:force_style='{style}'" -shortest -map 2:a:0 {out} -y""" #-hide_banner -loglevel error 
+            command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -to {end + start_time} -i {stock_footage} -i {os.path.join(output_path,"title.mp3.png")} -i "concat:{audio_str}" -filter_complex "[0:v][1:v] overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2:enable='between(t,0,{title_end})',subtitles={subtitle_body_path}:force_style='{style}'" -shortest -map 2:a:0 {out} -preset fast -y""" #-hide_banner -loglevel error 
         else:
-            command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -to {end} -i {stock_footage} -i "concat:{audio_str}" -filter_complex "[0:v] subtitles={subtitle_body_path}:force_style='{style}'" -shortest -map 1:a:0 {out} -y""" # -hide_banner -loglevel error 
+            command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -to {end + start_time} -i {stock_footage} -i "concat:{audio_str}" -filter_complex "[0:v] subtitles={subtitle_body_path}:force_style='{style}'" -shortest -map 1:a:0 {out} -preset fast -y""" # -hide_banner -loglevel error 
         # command = (
         #     "ffmpeg",
         #     "-stream_loop", "-1",

@@ -7,9 +7,13 @@ import zipfile
 import boto3
 import shutil
 from time import sleep
+from flask_socketio import SocketIO
+
+
 conn = Redis(host='redis', port=6379)
 worker = Worker(map(Queue, ['default']), connection=conn)
 
+socketio = SocketIO(message_queue='redis://redis:6379')
 
 
 if __name__ == '__main__':
@@ -48,8 +52,11 @@ def script_async(params):
                                         {'Bucket': "tsbckt",
                                         "Key": r"vids/" + params["ID"]+".zip"},
                                         ExpiresIn = 600)
+        
+        socketio.emit("task_complete", {'job_id': params["ID"], 'url': url})
         print(url,flush=True)
     except Exception as e:
+        socketio.emit('task_error', {'job_id': params["ID"], 'error': str(e)})
         print(e, flush=True)
         return "Error!"
     return url

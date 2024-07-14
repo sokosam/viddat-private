@@ -15,7 +15,7 @@
                     <ul class="nav_links">
                         <li><a href="{{url_for('client_page.status')}}">Your Video</a></li>
                         <li><a href="{{url_for('views.pricing')}}">Statistics</a></li>
-                        <li><a href="{{url_for('auth.login')}}" style="margin-right: 20px;">Profile</a></li>
+                        <li><a href="{{url_for('client_page.accountSettings')}}" style="margin-right: 20px;">Profile</a></li>
                     </ul>
                     <div class="profile" onclick="toggleMenu()">
                         <img src="{{current_user.profile_picture}}" class="user-pic" width="55px" height="55px">
@@ -104,14 +104,14 @@
                     <div class="video_box">
                         <img src="../static/mirrorsedge.jpg" class="display_img" alt="">
                         <label class="container">Mirrors Edge
-                            <input type="checkbox" name="videos" value="Mirrors Edge">
+                            <input type="checkbox" name="videos" value="stock_footage/mirrors_edge">
                             <span class="checkmark"></span>
                         </label>
                     </div>
                     <div class="video_box">
-                        <img src="../static/spiderman.jpg" class="display_img" alt="">
-                        <label class="container">Spider-Man
-                            <input type="checkbox" name="videos" value="Spider-Man">
+                        <img src="../static/IRL.jpg" class="display_img" alt="">
+                        <label class="container">IRL
+                            <input type="checkbox" name="videos" value="stock_footage/irl/">
                             <span class="checkmark"></span>
                         </label>
                     </div>
@@ -125,7 +125,7 @@
                     <div class="video_box">
                         <img src="../static/trackmania.jpg" class="display_img"alt="">
                         <label class="container">Trackmania
-                            <input type="checkbox" name="videos" value="Trackmania">
+                            <input type="checkbox" name="videos" value="stock_footage/trackmania/">
                             <span class="checkmark"></span>
                         </label>
                     </div>
