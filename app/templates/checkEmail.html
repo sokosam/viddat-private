@@ -21,7 +21,7 @@
                     <img width="90" height="90" src="/static/greenCheckmark.png">
                     <h1>Verify your Email</h1>
                     <p>You have entered <span style="font-weight: 400;">{{session['email']}}</span> As the Email Address for your VidDat account, verify your email by clicking the link sent to your listed email address.</p>
-                    <a href="https://mail.google.com/mail/u/0/#inbox"><button class="checkEmailCta">Verify your Email</button></a>
+                    <a href="{{ url_for('client_page.client') }}"><button class="checkEmailCta">Verified? Lets go!</button></a>
                 </div>
             </div>
         </section>

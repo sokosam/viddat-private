@@ -10,16 +10,43 @@
         document.addEventListener('DOMContentLoaded', (event) => {
             var socket = io();
 
+            // Fetch the job_id from the session or URL parameter
+            var job_id = "{{ current_user.get_id() }}"; // Set the job_id to the current user's ID
+
+            // Join the room for this job
+            socket.emit('join', {'job_id': job_id});
+
             socket.on('task_complete', function(data) {
-                var li = document.createElement("li");
-                li.appendChild(document.createTextNode('Task ' + data.job_id + ' completed. Download URL: ' + data.url));
-                document.getElementById("messages").appendChild(li);
+                if (data.job_id === job_id) {
+                    var status = document.getElementById("status");
+                    status.outerHTML = '<a href="' +data.url +'" class="status_video"> Status: Video Finshed! </a>';
+                    var notice = document.getElementById("Notice");
+                    notice.innerHTML = '<span style="color: red;">Note:</span> This link will only be valid for 10 minutes, after this time period the video will become unaccessible';
+                    document.getElementById("Note").remove();
+                    var sound = Audio("../static/on_complete.wav");
+                    sound.play();
+                }
+            });
+            socket.on('task_started', function(data) {
+                if (data.job_id === job_id)
+            {
+                var status = document.getElementById("status");
+                status.innerHTML = 'In Progress';
+                var note = document.getElementById("Note");
+                note.innerHTML = "This process will take around 3-5 minutes! Refresh the page to see if its finished!";
+
+            }
             });
 
             socket.on('task_error', function(data) {
-                var li = document.createElement("li");
-                li.appendChild(document.createTextNode('Task ' + data.job_id + ' failed. Error: ' + data.error));
-                document.getElementById("messages").appendChild(li);
+                if (data.job_id === job_id) {
+                    var status = document.getElementById("status");
+                    status.outerHTML = '<a href="' +data.url +'" class="status_video" style= "color:red;"> Status: Failed</a>';
+                    var notice = document.getElementById("Notice");
+                    notice.innerHTML = '<span style="color: red;">Cause:</span> ' + data.error;
+                    document.getElementById("Note").remove();
+
+                }
             });
         });
     </script>
@@ -42,7 +69,7 @@
 
                     <div class="sub-menu-wrap" id="subMenu">
                         <div class="user-email">
-                            <h2>{{session['email']}}</h2>
+                            <h2>{{current_user.email}}</h2>
                         </div>
                         <div class="sub-menu">
                             <div class="user-info ">
@@ -76,15 +103,30 @@
                 <!-- <li>Reddit Post Used: {post}</li> -->
                 <a class="status_video" href="{{video}}">Status: Video Finshed!</a>
                 <p><span style="color: red;">Note:</span> This link will only be valid for 10 minutes, after this time period the video will become unaccessible</p>
+              
                 {% elif video_status == "started" %}
-
                 <li>Stock Footage used: {{stock_footage}}</li>
                 <img class="video_image" src="../static/{{cover}}" alt="Image of content being generated">
                 <li>Number of Characters: {{characters}}</li>
                 <!-- <li>Reddit Post Used: {post}</li> -->
-                <p class ="status_video">Status: Generating...</p>
-                <p>This process will take around 3-5 minutes! Refresh the page to see if its finished!</p>
-                <p><span style="color: red;">Note:</span> On completion, there will be a embedded link to access your video. This link will only be valid for 10 minutes.</p>
+                <p class ="status_video" id="status">Status: Generating...</p>
+                <p id="Note">This process will take around 3-5 minutes depending on input size! Stay on this page to retrieve your video!</p>
+                <p id="Notice"><span style="color: red;">Note:</span> On completion, there will be a embedded link to access your video. This link will only be valid for 10 minutes.</p>
+
+                {% elif  video_status =="queued" %}
+                <li>Stock Footage used: {{stock_footage}}</li>
+                <img class="video_image" src="../static/{{cover}}" alt="Image of content being generated">
+                <li>Number of Characters: {{characters}}</li>
+                <!-- <li>Reddit Post Used: {post}</li> -->
+                <p class ="status_video" id="status">Status: Queued</p>
+                <p id = "Note">Your video is in queue to be generated!</p>
+                <p id="Notice"><span style="color: red;">Note:</span> On completion, there will be a embedded link to access your video. This link will only be valid for 10 minutes.</p>
+                {% elif video_status == "failed" %}
+                <li>Stock Footage used: {{stock_footage}}</li>
+                <img class="video_image" src="../static/{{cover}}" alt="Image of content being generated">
+                <li>Number of Characters: {{characters}}</li>
+                <!-- <li>Reddit Post Used: {post}</li> -->
+                <p class ="status_video" id="status" style="color: red;">Status: Failed</p>
 
                 {% else %}
                 <h2 style="margin: auto;">It's empty here!</h2>
