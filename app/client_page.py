@@ -1,12 +1,12 @@
 from flask import Blueprint, render_template, request, session, current_app, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user, current_user
 import time
-from __init__ import db
+from __init__ import db, socketio
 from PIL import Image
+from flask_socketio import join_room, leave_room
 
 import random
 import string
-
 
 
 client_page = Blueprint('client_page', __name__)
@@ -16,7 +16,7 @@ client_page = Blueprint('client_page', __name__)
 def client():
     if request.method == "POST":
         text = request.form.get('text')
-        if len(text) < 100:
+        if len(text) < 100: 
             flash("Content must be atleast 100 characters", category="error")
         elif len(text) >5000:
             flash("Content cannot be greater than 5000 characters, try splitting it into parts!", category="error")
@@ -47,7 +47,7 @@ def client():
                 "USERNAME": current_user.username,
                 "THUMBNAIL_URL": current_user.profile_picture,
                 "AWS_SECRET": current_user.aws_secret,
-                "AWS_ACCESS": current_user.aws_access
+                "AWS_ACCESS": current_user.aws_access,
             }
 
             queue = current_app.config['QUEUE']
@@ -57,8 +57,7 @@ def client():
                 flash("You already have a video generating!", category="error")
                 return redirect(url_for('client_page.client'))
 
-            current_user.current_video = params["ID"]
-            queue.enqueue("worker.script_async", params,job_id=user_id, job_timeout=1800)
+            queue.enqueue("worker.script_async", params,job_id=user_id, job_timeout=1800, result_ttl= 600)
             print(user_id, "attempted to start a job. \n STATUS: SUCCESS", flush=True)
             flash("Your videos now generating! Head over to Video Status to retrieve it!",category="success")
     return render_template('clientPage.html', user=current_user)
@@ -131,8 +130,15 @@ def status():
             params = job.fetch(id= user, connection = current_app.config["CONNECTION"]).args[0]
 
             video_status = job.get_status()
+            print(video_status, flush=True)
             if video_status == "finished":
                 video = job.fetch(id= user, connection = current_app.config["CONNECTION"]).result
+                if video == "Error!":
+                    return render_template("status.html",
+                                    user=current_user,
+                                    video_status="failed",
+                                    video=video)
+        # except Exception as e:
                 print(video,flush=True)
             else:
                 video = "Video Not Done Proccessing!"
@@ -145,6 +151,7 @@ def status():
                             video=video)
         # except Exception as e:
         #     print(e, flush=True)
+        
     return render_template("status.html",
                             user=current_user,
                             video_status=video_status,
@@ -153,6 +160,12 @@ def status():
                             cover=  videos[params["VIDEO"]][1],
                             characters=  len(params["TEXT"])
                             )
+
+@socketio.on('join')
+def handle_join(data):
+    room = data['job_id']
+    join_room(room)
+    print(f"Client joined room: {room}", flush=True)
 
 def generate_random_string(length=8):
     characters = string.ascii_letters + string.digits  # Includes both letters and numbers

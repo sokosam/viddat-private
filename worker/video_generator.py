@@ -117,6 +117,10 @@ class web_gen:
         if not gender: gender = textProcessing.getGender(text) 
         if title: gender += textProcessing.getGender(title)
 
+        title = title.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        red_text = red_text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        text = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
         if not stock_footage or stock_footage=="":
             drive = choice(os.listdir("stock_footage"))
             stock_video = choice(os.listdir(os.path.join("stock_footage", drive)))

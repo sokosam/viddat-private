@@ -20,9 +20,13 @@ if __name__ == '__main__':
     worker.work()
 
 def script_async(params):
+    job_id = params['USERID']  # Use USERID as the room ID
     try:
+        socketio.emit('task_started', {'job_id': job_id}, room=job_id)
         client = web_gen()
         os.mkdir(path ="temp"+params["ID"])
+
+
         client.generate_video(
                             text=params['TEXT'],
                             title=params['TITLE'],
@@ -53,12 +57,13 @@ def script_async(params):
                                         "Key": r"vids/" + params["ID"]+".zip"},
                                         ExpiresIn = 600)
         
-        socketio.emit("task_complete", {'job_id': params["ID"], 'url': url})
+        socketio.emit('task_complete', {'job_id': job_id, 'url': url}, room=job_id)
         print(url,flush=True)
     except Exception as e:
-        socketio.emit('task_error', {'job_id': params["ID"], 'error': str(e)})
+        socketio.emit('task_error', {'job_id': job_id, 'error': str(e)}, room=job_id)
         print(e, flush=True)
         return "Error!"
+    
     return url
 
 def update_pfp(pfp, filename, format):

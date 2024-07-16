@@ -12,7 +12,7 @@ class VTT:
         self.filename = kwargs.get("Filename")
         self.audio_length_in_ms = kwargs.get("AudioLengthInMs")
         self.format = kwargs.get("Format", "vtt")
-        self.maxChars = 4
+        self.maxChars = 0
         self.vtt = WebVTT()
 
     def remove_ssml_tags(self, text):
@@ -95,11 +95,12 @@ class VTT:
         response = self.to_sentences(self.polly_response)
         sentences = [x for x in response if x['type'] == 'word' and self.remove_ssml_tags(x['value']) != ""]
         textWords = self.remove_ssml_tags(kwargs['t']).split()
-        if len(sentences) == len(textWords):
-            for i,sentence in enumerate(sentences):
-                sentence['value'] = textWords[i]
+        # if len(sentences) == len(textWords):
+        #     for i,sentence in enumerate(sentences):
+        #         sentence['value'] = textWords[i]
         # print(self.breakSentence())
-                
+        
+                     
         phrase = []
         phraseCharCount = 0
         start = -1
@@ -112,7 +113,7 @@ class VTT:
                 end = sentences[index + 1]['time']
             wordlen = len(self.remove_ssml_tags(word['value']))
             phraseCharCount += wordlen
-            phrase.append(word['value'])
+            phrase.append(word['value'].replace("&amp;", "&" ).replace("&lt;","<").replace( "&gt;",">"))
 
             if phraseCharCount >= self.maxChars or any(char in phrase[-1] for char in (",",".","?","!")):
                 caption = Caption(

@@ -48,7 +48,7 @@ def sign_up():
         email = request.form.get("email")
         password = request.form.get('password')
         password_confirm = request.form.get('confirm')
-        session['email'] = email
+        session['email'] = obfuscate_email(email)
         user = User.query.filter_by(email=email).first()
         token = s.dumps(email,  salt='email_confirm')
 
@@ -93,3 +93,10 @@ def confirm_email(token):
 @auth.route('/confirm_email/verify')
 def verifyEmail():
     return  render_template('checkEmail.html')
+
+def obfuscate_email(email : str):
+    i = len(email) -1
+    while email[i] != "@":
+        i-=1
+    chars_before = i//2
+    return email[0 :chars_before + 1] + "*"* (i -chars_before) + email[i:]
