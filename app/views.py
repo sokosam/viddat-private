@@ -18,3 +18,7 @@ def emailVerified():
 @views.route('/test')
 def test():
     return render_template("checkEmail.html")
+
+@views.route("/tutorial")
+def tutorial():
+    return render_template("how_to.html")

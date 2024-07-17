@@ -51,7 +51,7 @@ class web_gen:
                     for line in infile:
                         outfile.write(line)
 
-    def generate_audio(self, output_path, text, title, gender, aws_access, aws_secret,speed = "120"):
+    def generate_audio(self, output_path, text, title, gender, aws_access, aws_secret,mode="neural",speed = "120"):
         time = 0
 
         if gender < 0: gender = "Joanna"
@@ -68,7 +68,7 @@ class web_gen:
         concat_audio = []
         concat_SRT = []
 
-        polly = PollyVTT(params = {"AWS_ACCESS_KEY": aws_access, "AWS_SECRET_KEY": aws_secret})
+        polly = PollyVTT(params = {"AWS_ACCESS_KEY": aws_access, "AWS_SECRET_KEY": aws_secret, "MODE":mode})
 
         if title:
             time += polly.generate(
