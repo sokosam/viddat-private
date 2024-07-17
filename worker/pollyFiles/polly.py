@@ -11,7 +11,7 @@ class Polly:
 
         self.client = session.client("polly", region_name="ca-central-1")
         self.defaults = {
-            "Engine": "neural",
+            "Engine": params["MODE"],
             "LanguageCode": "en-US",
             "OutputFormat": "pcm",
             "SampleRate": "24000",

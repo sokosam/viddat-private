@@ -23,15 +23,13 @@
                     var notice = document.getElementById("Notice");
                     notice.innerHTML = '<span style="color: red;">Note:</span> This link will only be valid for 10 minutes, after this time period the video will become unaccessible';
                     document.getElementById("Note").remove();
-                    var sound = Audio("../static/on_complete.wav");
-                    sound.play();
                 }
             });
             socket.on('task_started', function(data) {
                 if (data.job_id === job_id)
             {
                 var status = document.getElementById("status");
-                status.innerHTML = 'In Progress';
+                status.innerHTML = 'Status: In Progress';
                 var note = document.getElementById("Note");
                 note.innerHTML = "This process will take around 3-5 minutes! Refresh the page to see if its finished!";
 
@@ -59,7 +57,7 @@
                     <a href="{{ url_for('client_page.client') }}" class="logo"><h1 style="color: black;">Viddat</h1></a>
                     <ul class="nav_links">
                         <li><a href="{{url_for('client_page.status')}}">Your Video</a></li>
-                        <li><a href="{{url_for('views.pricing')}}">Statistics</a></li>
+                        <li><a href="{{url_for('views.tutorial')}}">How to Use</a></li>
                         <li><a href="{{url_for('client_page.accountSettings')}}" style="margin-right: 20px;">Profile</a></li>
                     </ul>
                     <div class="profile" onclick="toggleMenu()">

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/how_to.css')}}" />
+    <title>Viddat Home</title>
+</head>
+<body style="background-color: #E8E8E8;">
+    <header>
+        <div id="navbar">
+            <header>    
+                <nav>
+                    <a href="{{ url_for('client_page.client') }}" class="logo"><h1 style="color: black;">Viddat</h1></a>
+                    <ul class="nav_links">
+                        <li><a href="{{url_for('client_page.status')}}">Your Video</a></li>
+                        <li><a href="{{url_for('views.pricing')}}">How to Use</a></li>
+                        <li><a href="{{url_for('client_page.accountSettings')}}" style="margin-right: 20px;">Profile</a></li>
+                    </ul>
+                    <div class="profile" onclick="toggleMenu()">
+                        <img src="{{current_user.profile_picture}}" class="user-pic" width="55px" height="55px">
+                        <img src="static/downArrow.svg" width="14" height="14" class="downArrow"> 
+                    </div>
+
+                    <div class="sub-menu-wrap" id="subMenu">
+                        <div class="user-email">
+                            <h2>{{current_user.email}}</h2>
+                        </div>
+                        <div class="sub-menu">
+                            <div class="user-info ">
+                                <a href="{{url_for('client_page.accountSettings')}}">
+                                    <div class="account-settings">
+                                        <img src="static/settings.png" class="setting_gear" width="20px" height="20px" style="margin-top: 3px;">
+                                        <h3 style="margin-left: 4px;">Account Settings</h3>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="logout">
+                                <a href="{{ url_for('auth.logout') }}"><button class="logbutton">Log out</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+        
+        <script type="text/javascript">
+            let boxes = document.querySelectorAll("input[type=checkbox]");
+            boxes.forEach(b => b.addEventListener("change", tick));
+            function tick(e) {
+            let state = e.target.checked; // save state of changed checkbox
+            boxes.forEach(b => b.checked = false); // clear all checkboxes
+            e.target.checked = state; // restore state of changed checkbox
+            }
+            </script>
+        <script>
+            let subMenu = document.getElementById("subMenu");
+
+            function toggleMenu() {
+                subMenu.classList.toggle("open-menu");
+            }
+
+        </script>
+        </header>
+        </div>
+    </header>
+
+    <section style="background-color: #E8E8E8;">
+        <div class="tutorial-container" style="background-color: white;margin: 5vh; border-radius: 20px;">
+            <h2>Welcome to the Viddat Tutorial</h2>
+            <br>
+            <div class="tutorial-step">
+                <h3>Step 1: Create an AWS Account</h3>
+                <p>To get started, you need an <a href="https://portal.aws.amazon.com/billing/signup?refid=em_127222&p=free&c=hp&z=1&redirect_url=https%3A%2F%2Faws.amazon.com%2Fregistration-confirmation#/account">AWS Account</a> in order to generate the audio for your videos!</p>
+                <p style="color: red; "> IMPORTANT: Our service is completely FREE but if your are not on the FREE TIER of AWS you may incurr AWS FEES</p>
+                <p style="color: red"> Please look at the <a href="https://aws.amazon.com/free/">Free Tier</a> limits of AWS SPECIFICALLY Polly (neural speech) and Cloud Data Transfer</p>
+                <p style="color: red;"> As of 7/17/2024 the FREE Tier consists of 1 Million characters per month of Neural TTS and 100 Gigabytes Data Transfer per month.</p>
+            </div>
+            <br>
+            <div class="tutorial-step">
+                <h3>Step 2: Create an IAM User for AWS Keys</h3>
+                <p>To start creating on VidDat, you must have valid AWS configurations for the AWS Polly Service (Text To Speech) and the S3 Service (Cloud Storage)</p>
+                <p>Follow these steps to enable these settings and to retreive your AWS Keys!</p>
+                <br>
+                <h4>Create AWS User</h4>
+                <p>Click on the drop down menu on the top right and then press on "Security credentials".</p>
+                <img class="steps" src="../static/step1.png" alt="">
+                <p>Next click on "Users" on the menu on the left.</p>
+                <img class="steps" src="../static/step2.png" alt="">
+                <p>Press "Create user", choose a name (Can be anything).</p>
+                <img class="steps" src="../static/step3.png" alt="">
+                <p>Choose "Attach policies directly", search and click for "AmazonPollyFullAccess" and "AmazonS3FullAccess".</p>
+                <p style="color:red">Selecting these policies are important for security purposes as this means the keys will ONLY have access to the Text To Speech Service and Online Cloud Storage Service</p>
+                <img class="steps" src="../static/step4.png" alt="">
+                <p>Heres what the review and create page should look like, press "Create user".</p>
+                <img class="steps" src="../static/step5.png" alt="">
+                <h4>Now that we have our AWS User created, lets get our Access and Secret Keys!</h4>
+                <p>Choose your user</p>
+                <img class="steps" src="../static/step6.png" alt="">
+                <p>Press "Create access key"</p>
+                <img class="steps" src="../static/step7.png" alt="">
+                <p>Choose "Third-party service", confirm, and create.</p>
+                <img class="steps" src="../static/step8.png" alt="">
+                <p>Copy your keys to the profile settings page!</p>
+                <img class="steps" src="../static/step9.png" alt="">
+            </div>
+            <div class="tutorial-step">
+                <h3>Step 3: Save your keys on the settings page!</h3>
+                <p>Now that you have your AWS Keys copy and paste them into their respective boxes.</p>
+                <p>Choose a profile picture and profile username. These represent the image and name of the title card shown below.</p>
+                <img class="steps" src="../static/step10.png" alt="">
+                <p style="color:red;">Remember to  press save!</p>
+                <a href="{{url_for('client_page.client')}}">You are now all set to start creating!</a>
+            </div>
+            <!-- Add more tutorial steps as needed -->
+        </div>
+    </section>
+</body>
+</html>
+

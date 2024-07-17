@@ -91,8 +91,8 @@ def accountSettings():
                     raise TypeError("Trash extension")
                 queue = current_app.config['QUEUE']
                 filename = generate_random_string(25) + current_user.get_id()
-                current_user.profile_picture=r"https://tsbckt.s3.amazonaws.com/pfp/" + filename + "." +pil_image.format.lower()
-                queue.enqueue("worker.update_pfp", pfp=pil_image, filename=filename, format = pil_image.format.lower())
+                current_user.profile_picture=r"https://profilepictsbckt.s3.amazonaws.com/pfp/" + filename + "." +pil_image.format.lower()
+                queue.enqueue("worker.update_pfp", pfp=pil_image, filename=filename, format = pil_image.format.lower(), at_front=True)
             except Exception as e:
                 print(e, flush=True)
             db.session.commit()
