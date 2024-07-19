@@ -165,8 +165,9 @@ nav ul li a:hover {
   }
 
   .alert_success {
-    background-color: green; /* Red */
+    background-color: green; 
     color: white;
+    padding: 10px;
     width: 100%;
     height: fit-content;
   }

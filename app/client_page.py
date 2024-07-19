@@ -96,7 +96,7 @@ def accountSettings():
             except Exception as e:
                 print(e, flush=True)
             db.session.commit()
-            flash("Profile Update Success!")
+            flash("Profile Update Success!", category="success")
     return render_template('accountSettings.html', user=current_user)
 
 @client_page.route('/premiumSubscriptions')
@@ -133,11 +133,16 @@ def status():
             print(video_status, flush=True)
             if video_status == "finished":
                 video = job.fetch(id= user, connection = current_app.config["CONNECTION"]).result
-                if video == "Error!":
+                if type(video) is tuple:
                     return render_template("status.html",
                                     user=current_user,
                                     video_status="failed",
-                                    video=video)
+                                    stock_footage = videos[params["VIDEO"]][0],
+                                    cover=  videos[params["VIDEO"]][1],
+                                    video=video[0],
+                                    err = video[1],
+                                    characters=  len(params["TEXT"])
+                                    )
         # except Exception as e:
                 print(video,flush=True)
             else:
