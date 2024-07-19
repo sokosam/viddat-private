@@ -99,4 +99,4 @@ def obfuscate_email(email : str):
     while email[i] != "@":
         i-=1
     chars_before = i//2
-    return email[0 :chars_before + 1] + "*"* (i -chars_before) + email[i:]
+    return email[0 :chars_before + 1] + "*"*(i-chars_before) + email[i:]

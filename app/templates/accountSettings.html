@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/accountSettings.css')}}" />
     <title>Viddat Home</title>
 </head>
@@ -17,7 +22,7 @@
                         <li><a href="{{url_for('client_page.accountSettings')}}" style="margin-right: 20px;">Profile</a></li>
                     </ul>
                     <div class="profile" onclick="toggleMenu()">
-                        <img src="{{current_user.profile_picture}}" class="user-pic" width="55px" height="55px">
+                        <img src="{{current_user.profile_picture}}" class="user-pic" width="55px" height="55px" onerror="this.onerror=null; this.src='../static/loading.gif'">
                         <img src="../static/downArrow.svg" width="14" height="14" class="downArrow"> 
                     </div>
 
@@ -71,7 +76,7 @@
         <form enctype=multipart/form-data method="POST">
             <div class="sideNav">
                 <div class="user-img">
-                        <img src="{{current_user.profile_picture}}" id="photo" height="80px" width="80px">
+                        <img src="{{current_user.profile_picture}}" id="photo" height="80px" width="80px" onerror="this.onerror=null; this.src='../static/loading.gif'">
                         <input 
                             type="file" 
                             class="file-uploader"
@@ -94,7 +99,8 @@
                             }
 
                             // check if size (in bytes) exceeds 10 MB
-                            if (image.size > 10_000_000) {
+                            if (image.size > 10*1024*1024) {
+                                fileUploadInput.value= null;
                             return alert('Maximum upload size is 10MB!');
                             }     
                             const fileReader = new FileReader();
