@@ -18,7 +18,8 @@
                 <nav>
                     <a href="{{ url_for('client_page.client') }}" class="logo"><h1 style="color: black;">Viddat</h1></a>
                     <ul class="nav_links">
-                        <li><a href="{{url_for('views.tutorial')}}">How to Use</a></li>
+                        <li><a href="{{url_for('client_page.status')}}">Your Video</a></li>
+                        <li><a href="{{url_for('views.tutorial')}}">How To Use</a></li>
                         <li><a href="{{url_for('client_page.accountSettings')}}" style="margin-right: 20px;">Profile</a></li>
                     </ul>
                     <div class="profile" onclick="toggleMenu()">
@@ -131,11 +132,11 @@
                     <div style="padding: 30px;">
                             <label for="access">AWS Access Code</label>
                             <br>
-                            <input type="password" id="access" name="access" placeholder="Required">
+                            <input type="password" id="access" name="access" autocomplete="off" placeholder="Required">
                             <br><br>
                             <label for="secret">AWS Secret Code</label>
                             <br>
-                            <input type="password" id="secret" name="secret" placeholder="Required"> 
+                            <input type="password" id="secret" name="secret" autocomplete="off" placeholder="Required"> 
                             <br><br>
                             <label for="username">Username</label>
                             <br>

@@ -41,9 +41,9 @@
                                 <label for="email">Email:</label><br>
                                 <input type="email" id="email" name="email"><br><br>
                                 <label for="password">Password:</label><br>
-                                <input type="password" id="password" name="password"><br><br>
+                                <input type="password" autocomplete="off" id="password" name="password"><br><br>
                                 <label for="confirm">Confirm Password:</label><br>
-                                <input type="password" id="confirm" name="confirm"><br><br>
+                                <input type="password" autocomplete="off" id="confirm" name="confirm"><br><br>
                                 {% with messages = get_flashed_messages()%}
                                 {% if messages%}
                                     {% for message in messages%}
