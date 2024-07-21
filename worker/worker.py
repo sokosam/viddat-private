@@ -1,12 +1,10 @@
 from rq import Queue, Worker
 from redis import Redis
 from video_generator import web_gen
-from PIL import Image
 import os
 import boto3
 import botocore.exceptions
 import shutil
-from time import sleep
 from flask_socketio import SocketIO
 from viddat_exceptions import *
 
@@ -58,7 +56,7 @@ def script_async(params):
             url = client.generate_presigned_url("get_object", Params=
                                             {'Bucket': "tsbckt",
                                             "Key": r"vids/" + params["ID"]+".mp4"},
-                                            ExpiresIn = 600)
+                                            ExpiresIn = 1800)
         except Exception as upload_error:
             raise video_upload_error("Something went wrong with the uploading of the video, this is most likely an AWS S3 service issue and not your fault!")
         socketio.emit('task_complete', {'job_id': job_id, 'url': url}, room=job_id)

@@ -21,6 +21,11 @@
         }
         }
     </script>
+        <script>
+            if ( window.history.replaceState ) {
+                window.history.replaceState( null, null, window.location.href );
+            }
+        </script>
 </head>
 <body>
     <div class="all">
@@ -41,7 +46,7 @@
                                 <label for="email">Email:</label><br>
                                 <input type="email" id="email" name="email"><br><br>
                                 <label for="password">Password:</label><br>
-                                <input type="password" id="password" name="password">
+                                <input type="password" autocomplete="off" id="password" name="password">
                                 {% with messages = get_flashed_messages()%}
                                 {% if messages%}
                                     {% for message in messages%}
@@ -53,7 +58,12 @@
                                     {%endif%}
                                     {%endwith%}
                                 <br>
-                                <input type="checkbox" onclick="ShowPassword()"> Show Password <br><br>
+                                <div>
+                                    <a style="float:right; font-size: 15px; font-weight: 400;" href="{{url_for('auth.recover')}}">Forgot Password?</a>
+
+                                    <input type="checkbox" onclick="ShowPassword()"> Show Password<br><br>        
+                                </div>
+                                <br>
                                 <input type="submit" value="Login Now">
                             </form>
                         </div>

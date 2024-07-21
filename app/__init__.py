@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from instance.secrets import getAppKey, getSQL, getEmailPWD
-from flask_mail import Mail, Message
+from flask_mail import Mail
 from rq import Queue
 from redis import Redis
 from flask_socketio import SocketIO
@@ -38,9 +38,9 @@ def create_app():
     from auth import auth
     from client_page import client_page
     
-    app.register_blueprint(views, url_prefix="/")
-    app.register_blueprint(auth, url_prefix="/")
-    app.register_blueprint(client_page, url_prefix='/')
+    app.register_blueprint(views, url_prefix=r"/")
+    app.register_blueprint(auth, url_prefix=r'/')
+    app.register_blueprint(client_page, url_prefix=r'/')
 
 
     from models import User
@@ -56,6 +56,5 @@ def create_app():
     def load_user(id):
         return User.query.get(int(id))
 
-    
     return app
 

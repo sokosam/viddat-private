@@ -52,21 +52,18 @@ nav h1 {
 
 .emailChild h1{
     color: #000;
-    text-align: left;
     font-size: 48px;
-    padding-bottom: 15px; 
 }
 
 .emailChild p{
     color: #000;
-    text-align: left;
     font-size: 24px;
     font-weight:300; 
     padding: 20px
 }
 
 button {
-    float: right;
+
     background-color: #346DFF;
     color: #fff;
     font-size: 18px;

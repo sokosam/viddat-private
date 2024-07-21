@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;500&display=swap');
+
+* {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Red Hat Display', sans-serif;
+    caret-color: rgba(0, 0, 0, 0);
+    letter-spacing: 1px;
+}
+
+nav h1 {
+    color: #fff;
+}
+
+nav a {
+    text-decoration: none;
+}
+
+nav {
+    width: 100%;
+    padding: 10px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    background-color: #346DFF;
+    color: #fff;
+}
+
+nav h1 {
+    color: #fff;
+}
+
+.emailParent {
+    background-color: #F0F0F0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 150px;
+    min-height: 900px;
+    height: auto;
+    height: 900px;
+}
+
+.emailChild {
+    padding: 50px 50px;
+    background-color: #fff;
+    width: 600px;
+}
+
+.emailChild h1{
+    color: #000;
+    font-size: 48px;
+    padding-bottom: 15px; 
+}
+
+.emailChild p{
+    color: #000;
+    font-size: 24px;
+    font-weight:300; 
+    padding: 20px
+}
+
+button {
+    float: right;
+    background-color: #346DFF;
+    color: #fff;
+    font-size: 18px;
+    border: none;
+    padding: 12px 20px;
+    width: 150px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.checkEmailCta {
+    float: none;
+    width: 450px;
+    border-radius: 15px;
+    padding: 16px 20px;
+}
+
+#checkEmailChild p {
+    padding-bottom: 40px;
+    text-align: center;
+}
+
+#checkEmailChild h1{
+    text-align: center;
+    font-size: 42px;
+    padding-bottom: 5px; 
+    padding-top: 5px;
+}
+
+#checkEmailChild {
+    padding: 50px 25px;
+}
+
+input[type=email], [type=text], [type=password] {
+    background-color: #fff;
+    width: 420px;
+    padding: 4px 5px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    caret-color: #000000;
+    font-size: 26px;
+    font-weight: 300;
+  }
+
+input[type=submit]{
+    background-color: #346DFF;
+    width: 420px;
+    color: white;
+    border : 0;
+    cursor: pointer;
+    font-size: 32px;
+    transition: all 0.3s ease 0s;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 10px;
+}
+
+input[type=submit]:hover{
+    background-color: #456ed5;
+}
+
+  /* The close button */
+  .closebtn {
+    margin-left: 15px;
+    opacity: 0;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  #viddat_button:hover{
+    cursor: pointer;
+    
+  }
