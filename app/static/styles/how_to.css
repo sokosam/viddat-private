@@ -330,8 +330,11 @@ label {
 
 
 .tutorial-container{
-    width: fit-content;
+    width: 90vw;
     height: fit-content;
+    margin: auto;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
     padding: 20px;
 }
 

@@ -43,7 +43,7 @@
                                 <label for="password">Password:</label><br>
                                 <input type="password" autocomplete="off" id="password" name="password"><br><br>
                                 <label for="confirm">Confirm Password:</label><br>
-                                <input type="password" autocomplete="off" id="confirm" name="confirm"><br><br>
+                                <input type="password" autocomplete="off" id="confirm" name="confirm"><br>
                                 {% with messages = get_flashed_messages()%}
                                 {% if messages%}
                                     {% for message in messages%}
@@ -56,8 +56,11 @@
                                     {%endwith%}
                                 <input type="checkbox" onclick="ShowPassword()"> Show Password <br><br>
                                 <input type="submit" value="Create Account">
+                                <br>
                             </form>
                         </div>
+                        <a id='ToS'href="">Terms of Service</a>
+                        <a id='privacy'href="{{ url_for('views.privacy') }}">Privacy Policy</a>
                     </div>
                 </div>
             </div>

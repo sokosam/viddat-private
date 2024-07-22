@@ -166,6 +166,7 @@ def status():
                             characters=  len(params["TEXT"])
                             )
 
+
 @socketio.on('join')
 def handle_join(data):
     room = data['job_id']

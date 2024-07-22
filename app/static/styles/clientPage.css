@@ -420,3 +420,6 @@ input[type=submit]{
     transition: 0.3s;
   }
   
+footer{
+    background-color: #E8E8E8;
+}
