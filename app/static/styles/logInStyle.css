@@ -122,7 +122,7 @@ form {
 
 input[type=email], [type=text], [type=password] {
     background-color: #fff;
-    width: 420px;
+    width: 100%;
     padding: 4px 5px;
     margin: 8px 0;
     box-sizing: border-box;
@@ -133,7 +133,7 @@ input[type=email], [type=text], [type=password] {
 
 input[type=submit]{
     background-color: #346DFF;
-    width: 420px;
+    width: 100%;
     color: white;
     border : 0;
     cursor: pointer;
@@ -196,3 +196,7 @@ input[type=submit]:hover{
   .closebtn:hover {
     color: black;
   }
+
+#ToS{
+    text-align: center !important;
+}

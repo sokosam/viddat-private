@@ -40,7 +40,7 @@
                         <label for="password">Password:</label><br>
                         <input type="password" autocomplete="off" id="password" name="password"><br><br>
                         <label for="confirm">Confirm Password:</label><br>
-                        <input type="password" autocomplete="off" id="confirm" name="confirm"><br><br> 
+                        <input type="password" autocomplete="off" id="confirm" name="confirm"><br>
                         {% with messages = get_flashed_messages(category_filter=["error"])%}
                         {% if messages%}
                             {% for message in messages%}
@@ -59,7 +59,7 @@
                             {%endfor%}
                             {%endif%}
                             {%endwith%}
-                        <input type="checkbox" onclick="ShowPassword()"> Show Password <br><br>
+                        <input type="checkbox" onclick="ShowPassword()"> Show Password <br>
                         <input type="submit" value="Reset Password">
                     </form>
 
