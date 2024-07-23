@@ -1,7 +1,7 @@
 services:
     web:
         build: ./app
-        command: python app.py
+        command: gunicorn -k gevent -w 1 -b 0.0.0.0:5000 wsgi:app
         ports:
             - 5000:5000
         depends_on:
@@ -23,3 +23,9 @@ services:
                 window: 120s
     redis:
         image: redis:latest
+    nginx:
+        build: ./nginx
+        ports:
+        - "80:80"
+        depends_on:
+        - web

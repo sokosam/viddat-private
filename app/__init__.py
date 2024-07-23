@@ -1,3 +1,7 @@
+#socketio
+from gevent import monkey
+monkey.patch_all()
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -17,15 +21,16 @@ app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
 
-import logging
-log = logging.getLogger('werkzeug')
-log.setLevel(logging.ERROR)
+# import logging
+# log = logging.getLogger('werkzeug')
+# log.setLevel(logging.ERROR)
 
 connection = Redis(host='redis', port =6379)
 app.config["CONNECTION"] = connection
 app.config['QUEUE'] = Queue(connection=connection)
 
-socketio = SocketIO(app,message_queue='redis://redis:6379')
+
+socketio = SocketIO(app,message_queue='redis://redis:6379', async_mode="gevent")
 mailer = Mail(app)
 
 def create_app():

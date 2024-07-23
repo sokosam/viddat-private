@@ -142,6 +142,9 @@ class web_gen:
         video_streams = [stream for stream in probe["streams"] if stream["codec_type"] == "video"]
         w,h = int(video_streams[0]['width']), int(video_streams[0]['height'])
 
+        stock_footage_duration = float(video_streams[0]['duration'])
+        start_time = randint(0, int(stock_footage_duration) -1)
+
         newW, newH = None, None
         if round(w/h, 2) > round(9/16,2):
             newW = int(h * (9/16))

@@ -1,3 +1,6 @@
+from gevent import monkey
+monkey.patch_all()
+
 from rq import Queue, Worker
 from redis import Redis
 from video_generator import web_gen
@@ -8,10 +11,11 @@ import shutil
 from flask_socketio import SocketIO
 from viddat_exceptions import *
 
+
 conn = Redis(host='redis', port=6379)
 worker = Worker(map(Queue, ['default']), connection=conn)
 
-socketio = SocketIO(message_queue='redis://redis:6379')
+socketio = SocketIO(message_queue='redis://redis:6379', async_mode="gevent")
 
 
 if __name__ == '__main__':

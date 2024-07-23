@@ -10,3 +10,5 @@ Werkzeug==3.0.3
 psycopg2-binary==2.9.9
 Pillow==10.4.0
 Flask-SocketIO==5.3.6
+gunicorn
+gevent
