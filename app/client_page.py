@@ -18,8 +18,8 @@ def client():
         text = request.form.get('text')
         if len(text) < 100: 
             flash("Content must be atleast 100 characters", category="error")
-        elif len(text) >5000:
-            flash("Content cannot be greater than 5000 characters, try splitting it into parts!", category="error")
+        elif len(text) >10000:
+            flash("Content cannot be greater than 10000 characters, try splitting it into parts!", category="error")
         elif len(current_user.aws_secret) == 0 or len(current_user.aws_secret) == 0:
             flash("AWS Secret and AWS Access Keys are required! Please head to account settings!")
         else:
@@ -27,7 +27,10 @@ def client():
             part = request.form.get('part')
             video = request.form.get('videos')
             if not video: video = random.choice([r"stock_footage/minecraft/",
-                                                 r"stock_footage/cooking/"])
+                                                 r"stock_footage/cooking/", 
+                                                 r"stock_footage/irl/",
+                                                 r"stock_footage/trackmania/",
+                                                 r"stock_footage/mirrors_edge/"])
 
             if request.form.get("gender"):
                 gender = int(request.form.get('gender'))
@@ -57,7 +60,7 @@ def client():
                 flash("You already have a video generating!", category="error")
                 return redirect(url_for('client_page.client'))
 
-            queue.enqueue("worker.script_async", params,job_id=user_id, job_timeout=1800, result_ttl= 600)
+            queue.enqueue("worker.script_async", params,job_id=user_id, job_timeout=1800, result_ttl= 1800)
             print(user_id, "attempted to start a job. \n STATUS: SUCCESS", flush=True)
             flash("Your videos now generating! Head over to Video Status to retrieve it!",category="success")
     return render_template('clientPage.html', user=current_user)
@@ -122,8 +125,8 @@ def status():
             r"stock_footage/cooking/": ("Cooking","cooking.webp"),
             r"stock_footage/minecraft/": ("Minecraft", "minecraft_cover.png"),
             r"stock_footage/irl/":("IRL", "IRL.jpg"),
-            r"stock_footage/mirrors_edge": ("Mirrors Edge", "mirrorsedge.jpg"),
-            r"stock_footage/trackmania":("Trackmania", "trackmania.jpg")
+            r"stock_footage/mirrors_edge/": ("Mirrors Edge", "mirrorsedge.jpg"),
+            r"stock_footage/trackmania/":("Trackmania", "trackmania.jpg")
         }
 
         if job:
