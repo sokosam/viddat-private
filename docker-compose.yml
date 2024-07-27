@@ -1,7 +1,7 @@
 services:
     web:
         build: ./app
-        command: gunicorn -k gevent -w 1 -b 0.0.0.0:5000 wsgi:app
+        # command: gunicorn -k gevent -w 1 -b 0.0.0.0:5000 wsgi:app
         ports:
             - 5000:5000
         volumes:
@@ -10,7 +10,7 @@ services:
             - redis
     worker:
         build: ./worker
-        command: rq worker -u redis://redis:6379
+        # command: rq worker -u redis://redis:6379
         depends_on:
             - redis
             - web
