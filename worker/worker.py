@@ -21,12 +21,22 @@ socketio = SocketIO(message_queue='redis://redis:6379', async_mode="gevent")
 if __name__ == '__main__':
     worker.work()
 
+def remove_temp_viddat_dirs(base_dir):
+    for root, dirs, files in os.walk(base_dir):
+        for dir_name in dirs:
+            if dir_name.endswith("tempViddat"):
+                dir_path = os.path.join(root, dir_name)
+                print(f"Removing directory: {dir_path}")
+                shutil.rmtree(dir_path)
+
+
 def script_async(params):
+    remove_temp_viddat_dirs(base_dir= os.getcwd())
     job_id = params['USERID']  # Use USERID as the room ID
     try:
         socketio.emit('task_started', {'job_id': job_id}, room=job_id)
         client = web_gen()
-        os.mkdir(path ="temp"+params["ID"])
+        os.mkdir(path ="temp"+params["ID"] + "tempViddat")
 
         try:
             client.generate_video(
@@ -34,7 +44,7 @@ def script_async(params):
                                 title=params['TITLE'],
                                 red_text=params['PART'],
                                 gender=params["GENDER"],
-                                output_path="temp"+params["ID"],
+                                output_path="temp"+params["ID"]+"tempViddat",
                                 stock_footage =params["VIDEO"],
                                 output_name= params["ID"]+".mp4",
                                 thumbnail_url = params["THUMBNAIL_URL"],
@@ -50,18 +60,22 @@ def script_async(params):
             raise vidGen_error("Something went wrong during the generation process of your video, try changing your inputs or contacting support!")
         
         try:
+            put_session = boto3.Session(aws_access_key_id= "AKIAZQ3DTVZZEIHYE4HL", aws_secret_access_key= "tusVB+V/xXHY9N6D4MNIJiU79nVVoSJ2xrGvOOjt")
+            put = put_session.client("s3")
+
             session = boto3.Session(aws_access_key_id=params["AWS_ACCESS"], aws_secret_access_key=params["AWS_SECRET"])
             client = session.client("s3")
-            with open("temp" + params["ID"] + "//" + params["ID"]+".mp4", "rb") as f:
-                client.upload_fileobj(f, "tsbckt",  r"vids/"+ params["ID"]+".mp4")
+            with open("temp" + params["ID"] +"tempViddat" + "//" + params["ID"]+".mp4", "rb") as f:
+                put.upload_fileobj(f, "tsbckt",  r"vids/"+ params["ID"]+".mp4")
                 print("File: "+ params["ID"]+".mp4 " + "uploaded by user: " + params["USERID"], flush=True)
             
-            shutil.rmtree("temp"+params["ID"])
+            shutil.rmtree("temp"+params["ID"] + "tempViddat")
             url = client.generate_presigned_url("get_object", Params=
                                             {'Bucket': "tsbckt",
                                             "Key": r"vids/" + params["ID"]+".mp4"},
                                             ExpiresIn = 1800)
         except Exception as upload_error:
+            print( "Error Occured: " + str(upload_error), flush=True)
             raise video_upload_error("Something went wrong with the uploading of the video, this is most likely an AWS S3 service issue and not your fault!")
         socketio.emit('task_complete', {'job_id': job_id, 'url': url}, room=job_id)
         print(url,flush=True)

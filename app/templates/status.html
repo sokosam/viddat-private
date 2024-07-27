@@ -14,6 +14,7 @@
     <script type="text/javascript" charset="utf-8">
         document.addEventListener('DOMContentLoaded', (event) => {
             var socket = io();
+            // socket.connect('http://web:5000');
 
             // Fetch the job_id from the session or URL parameter
             var job_id = "{{ current_user.get_id() }}"; // Set the job_id to the current user's ID
@@ -30,7 +31,7 @@
                     document.getElementById("Note").remove();
                 }
             });
-            socket.on('task_started', function(data) {awd
+            socket.on('task_started', function(data) {
                 if (data.job_id === job_id)
             {
                 var status = document.getElementById("status");

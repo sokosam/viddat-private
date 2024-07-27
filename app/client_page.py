@@ -18,8 +18,8 @@ def client():
         text = request.form.get('text')
         if len(text) < 100: 
             flash("Content must be atleast 100 characters", category="error")
-        elif len(text) >10000:
-            flash("Content cannot be greater than 10000 characters, try splitting it into parts!", category="error")
+        elif len(text) >5000:
+            flash("Content cannot be greater than 5000 characters, try splitting it into parts!", category="error")
         elif len(current_user.aws_secret) == 0 or len(current_user.aws_secret) == 0:
             flash("AWS Secret and AWS Access Keys are required! Please head to account settings!")
         else:
