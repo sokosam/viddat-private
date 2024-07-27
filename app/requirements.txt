@@ -3,7 +3,7 @@ Flask_Login==0.6.3
 flask_mail==0.10.0
 flask_sqlalchemy==3.1.1
 itsdangerous==2.2.0
-redis==4.1.1
+redis==5.0.4
 rq==1.16.2
 SQLAlchemy==2.0.31
 Werkzeug==3.0.3

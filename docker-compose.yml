@@ -4,6 +4,8 @@ services:
         command: gunicorn -k gevent -w 1 -b 0.0.0.0:5000 wsgi:app
         ports:
             - 5000:5000
+        volumes:
+            - ./app:/app
         depends_on:
             - redis
     worker:
@@ -12,9 +14,11 @@ services:
         depends_on:
             - redis
             - web
-        # cpus: "1"
         deploy:
-            mode: replicated
+            resources:
+                limits:
+                    cpus: "4"
+                    memory: "2GB"
             replicas: 2
             restart_policy:
                 condition: on-failure
@@ -27,5 +31,9 @@ services:
         build: ./nginx
         ports:
         - "80:80"
+        - "443:443"
+        volumes:
+        - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+        - ./app/static:/app/static
         depends_on:
         - web
