@@ -17,7 +17,7 @@ def login():
         return redirect(url_for('client_page.client'))  
 
     if request.method == "POST":
-        email = request.form.get('email')
+        email = request.form.get('email').lower()
         password = request.form.get('password')
         
         user = User.query.filter_by(email = email).first()
@@ -46,7 +46,7 @@ def sign_up():
         return redirect(url_for('client_page.client'))  
 
     if request.method == "POST":
-        email = request.form.get("email")
+        email = request.form.get("email").lower()
         password = request.form.get('password')
         password_confirm = request.form.get('confirm')
         session['email'] = obfuscate_email(email)
@@ -101,7 +101,7 @@ def verifyEmail():
 @auth.route('/recover/', methods=['GET', 'POST'])
 def recover():
     if request.method == "POST":
-        email = request.form.get("email")
+        email = request.form.get("email").lower()
         try:
             token = s.dumps(email, "reset_pwd")
             link = url_for('auth.forgot', token=token, _external=True)
