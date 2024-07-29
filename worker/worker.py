@@ -72,7 +72,7 @@ def script_async(params):
             shutil.rmtree("temp"+params["ID"] + "tempViddat")
             url = client.generate_presigned_url("get_object", Params=
                                             {'Bucket': "tsbckt",
-                                            "Key": r"vids/" + params["ID"]+".mp4"},
+                                            "Key": r"vids/" + params["ID"]+".mp4", "RequestPayer": "requester"},
                                             ExpiresIn = 1800)
         except Exception as upload_error:
             print( "Error Occured: " + str(upload_error), flush=True)
