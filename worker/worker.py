@@ -17,6 +17,9 @@ worker = Worker(map(Queue, ['default']), connection=conn)
 
 socketio = SocketIO(message_queue='redis://redis:6379', async_mode="gevent")
 
+viddat_access = "AKIAZQ3DTVZZLEBKP5Z7"
+viddat_secret = "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"
+
 
 if __name__ == '__main__':
     worker.work()
@@ -54,13 +57,13 @@ def script_async(params):
         except botocore.exceptions.ClientError as audio_error:
             print("Error Occured: " + str(audio_error),flush=True)
             raise AWS_error("Something went wrong connecting to the AWS Service, this might be due to improper/wrong security key inputs (Access key and Secret key).")
-        
+
         except Exception as video_gen_exception:
             print("Error Occured: " + str(video_gen_exception),flush=True)
             raise vidGen_error("Something went wrong during the generation process of your video, try changing your inputs or contacting support!")
-        
+
         try:
-            put_session = boto3.Session(aws_access_key_id= "AKIAZQ3DTVZZEIHYE4HL", aws_secret_access_key= "tusVB+V/xXHY9N6D4MNIJiU79nVVoSJ2xrGvOOjt")
+            put_session = boto3.Session(aws_access_key_id= viddat_access, aws_secret_access_key= viddat_secret)
             put = put_session.client("s3")
 
             session = boto3.Session(aws_access_key_id=params["AWS_ACCESS"], aws_secret_access_key=params["AWS_SECRET"])
@@ -68,7 +71,7 @@ def script_async(params):
             with open("temp" + params["ID"] +"tempViddat" + "//" + params["ID"]+".mp4", "rb") as f:
                 put.upload_fileobj(f, "tsbckt",  r"vids/"+ params["ID"]+".mp4")
                 print("File: "+ params["ID"]+".mp4 " + "uploaded by user: " + params["USERID"], flush=True)
-            
+
             shutil.rmtree("temp"+params["ID"] + "tempViddat")
             url = client.generate_presigned_url("get_object", Params=
                                             {'Bucket': "tsbckt",
@@ -83,12 +86,12 @@ def script_async(params):
         socketio.emit('task_error', {'job_id': job_id, 'error': str(e)}, room=job_id)
         print(e, flush=True)
         return ("Error!", str(e))
-    
+
     return url
 
 def update_pfp(pfp, filename, format):
     try:
-        session = boto3.Session(aws_access_key_id="AKIAZQ3DTVZZEIHYE4HL", aws_secret_access_key="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")
+        session = boto3.Session(aws_access_key_id=viddat_access, aws_secret_access_key= viddat_secret)
         client = session.client("s3")
         pfp.save(f"{filename}.{format}")
         with open(f"{filename}.{format}", "rb") as f:
