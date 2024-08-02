@@ -1,3 +1,4 @@
+
 from gevent import monkey
 monkey.patch_all()
 
@@ -16,6 +17,9 @@ conn = Redis(host='redis', port=6379)
 worker = Worker(map(Queue, ['default']), connection=conn)
 
 socketio = SocketIO(message_queue='redis://redis:6379', async_mode="gevent")
+
+viddat_access = "AKIAZQ3DTVZZLEBKP5Z7"
+viddat_secret = "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"
 
 
 if __name__ == '__main__':
@@ -60,7 +64,7 @@ def script_async(params):
             raise vidGen_error("Something went wrong during the generation process of your video, try changing your inputs or contacting support!")
         
         try:
-            put_session = boto3.Session(aws_access_key_id= "AKIAZQ3DTVZZEIHYE4HL", aws_secret_access_key= "tusVB+V/xXHY9N6D4MNIJiU79nVVoSJ2xrGvOOjt")
+            put_session = boto3.Session(aws_access_key_id= viddat_access, aws_secret_access_key= viddat_secret)
             put = put_session.client("s3")
 
             session = boto3.Session(aws_access_key_id=params["AWS_ACCESS"], aws_secret_access_key=params["AWS_SECRET"])
@@ -88,7 +92,7 @@ def script_async(params):
 
 def update_pfp(pfp, filename, format):
     try:
-        session = boto3.Session(aws_access_key_id="AKIAZQ3DTVZZEIHYE4HL", aws_secret_access_key="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")
+        session = boto3.Session(aws_access_key_id=viddat_access, aws_secret_access_key= viddat_secret)
         client = session.client("s3")
         pfp.save(f"{filename}.{format}")
         with open(f"{filename}.{format}", "rb") as f:
