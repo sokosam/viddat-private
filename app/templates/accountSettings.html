@@ -22,7 +22,7 @@
                     <ul class="nav_links">
                         <li><a href="{{url_for('client_page.status')}}">Your Video</a></li>
                         <li><a href="{{url_for('views.tutorial), step=1}}">How To Use</a></li>
-                        <li><a href="{{url_for('client_page.accountSettings')}}" style="margin-right: 20px;">Profile</a></li>
+                        <li><a href="/client/accountSettings" style="margin-right: 20px;">Profile</a></li>
                     </ul>
                     <div class="profile" onclick="toggleMenu()">
                         <img src="{{current_user.profile_picture}}" class="user-pic" width="55px" height="55px" onerror="this.onerror=null; this.src='../static/loading.gif'">
