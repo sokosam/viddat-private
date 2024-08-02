@@ -15,7 +15,7 @@
                 <nav>
                     <a href="{{ url_for('client_page.client') }}" class="logo"><h1 style="color: black;">Viddat</h1></a>
                     <ul class="nav_links">
-                        <li><a href="{{url_for('views.tutorial')}}">How to Use</a></li>
+                        <li><a href="{{url_for('views.tutorial', step = 1)}}">How to Use</a></li>
                         <li><a href="{{url_for('auth.login')}}" style="margin-right: 20px;">Profile</a></li>
                     </ul>
                     <div class="profile" onclick="toggleMenu()">
