@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect, url_for
 
 
 views = Blueprint('views', __name__)    
@@ -27,6 +27,12 @@ def emailVerified():
 # def test():
 #     return render_template("checkEmail.html")
 
-@views.route("/tutorial")
-def tutorial():
-    return render_template("how_to.html")
+# @views.route("/tutorial")
+# def tutorial():
+#     return render_template("how_to.html")
+
+@views.route('/tutorial/<int:step>')
+def tutorial(step):
+    if step < 1 or step > 13:
+        return redirect(url_for('client_page.client'))
+    return render_template(f'vid-dat_tutorial-{step}.html')
