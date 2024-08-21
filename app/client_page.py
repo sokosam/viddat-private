@@ -126,7 +126,13 @@ def status():
             r"stock_footage/minecraft/": ("Minecraft", "minecraft_cover.png"),
             r"stock_footage/irl/":("IRL", "IRL.jpg"),
             r"stock_footage/mirrors_edge/": ("Mirrors Edge", "mirrorsedge.jpg"),
-            r"stock_footage/trackmania/":("Trackmania", "trackmania.jpg")
+            r"stock_footage/trackmania/":("Trackmania", "trackmania.jpg"),
+	    
+            r"stock_footage/cooking": ("Cooking","cooking.webp"),
+            r"stock_footage/minecraft": ("Minecraft", "minecraft_cover.png"),
+            r"stock_footage/irl":("IRL", "IRL.jpg"),
+            r"stock_footage/mirrors_edge": ("Mirrors Edge", "mirrorsedge.jpg"),
+            r"stock_footage/trackmania":("Trackmania", "trackmania.jpg")
         }
 
         if job:
