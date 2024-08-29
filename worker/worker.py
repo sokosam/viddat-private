@@ -50,6 +50,7 @@ def script_async(params):
                                 output_path="temp"+params["ID"]+"tempViddat",
                                 stock_footage =params["VIDEO"],
                                 output_name= params["ID"]+".mp4",
+                                music =params["MUSIC"],
                                 thumbnail_url = params["THUMBNAIL_URL"],
                                 user_name= params["USERNAME"],
                                 aws_access = params["AWS_ACCESS"],

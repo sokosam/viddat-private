@@ -1,171 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
-    
-    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/clientPage.css')}}" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="../static/favicon.ico" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{url_for('static',filename='styles/clientPage.css')}}"
+    />
     <title>Viddat Home</title>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <div id="navbar">
-            <header>    
-                <nav>
-                    <a href="{{ url_for('client_page.client') }}" class="logo"><h1 style="color: black;">Viddat</h1></a>
-                    <ul class="nav_links">
-                        <li><a href="{{url_for('client_page.status')}}">Your Video</a></li>
-                        <li><a href="{{url_for('views.tutorial', step=1)}}">How To Use</a></li>
-                        <li><a href="{{url_for('client_page.accountSettings')}}" style="margin-right: 20px;">Profile</a></li>
-                    </ul>
-                    <div class="profile" onclick="toggleMenu()">
-                        <img src="{{current_user.profile_picture}}" class="user-pic" width="55px" height="55px" onerror="this.onerror=null; this.src='../static/loading.gif'">
-                        <img src="static/downArrow.svg" width="14" height="14" class="downArrow"> 
-                    </div>
+      <div id="navbar">
+        <header>
+          <nav>
+            <a href="{{ url_for('client_page.client') }}" class="logo"
+              ><h1 style="color: black">Viddat</h1></a
+            >
+            <ul class="nav_links">
+              <li>
+                <a href="{{url_for('client_page.status')}}">Your Video</a>
+              </li>
+              <li>
+                <a href="{{url_for('views.tutorial', step=1)}}">How To Use</a>
+              </li>
+              <li>
+                <a
+                  href="{{url_for('client_page.accountSettings')}}"
+                  style="margin-right: 20px"
+                  >Profile</a
+                >
+              </li>
+            </ul>
+            <div class="profile" onclick="toggleMenu()">
+              <img
+                src="{{current_user.profile_picture}}"
+                class="user-pic"
+                width="55px"
+                height="55px"
+                onerror="this.onerror=null; this.src='../static/loading.gif'"
+              />
+              <img
+                src="static/downArrow.svg"
+                width="14"
+                height="14"
+                class="downArrow"
+              />
+            </div>
 
-                    <div class="sub-menu-wrap" id="subMenu">
-                        <div class="user-email">
-                            <h2>{{current_user.email}}</h2>
-                        </div>
-                        <div class="sub-menu">
-                            <div class="user-info ">
-                                <a href="{{url_for('client_page.accountSettings')}}">
-                                    <div class="account-settings">
-                                        <img src="static/settings.png" class="setting_gear" width="20px" height="20px" style="margin-top: 3px;">
-                                        <h3 style="margin-left: 4px;">Account Settings</h3>
-                                    </div>
-                                </a>
-                            </div>
+            <div class="sub-menu-wrap" id="subMenu">
+              <div class="user-email">
+                <h2>{{current_user.email}}</h2>
+              </div>
+              <div class="sub-menu">
+                <div class="user-info">
+                  <a href="{{url_for('client_page.accountSettings')}}">
+                    <div class="account-settings">
+                      <img
+                        src="static/settings.png"
+                        class="setting_gear"
+                        width="20px"
+                        height="20px"
+                        style="margin-top: 3px"
+                      />
+                      <h3 style="margin-left: 4px">Account Settings</h3>
+                    </div>
+                  </a>
+                </div>
 
-                            <div class="logout">
-                                <a href="{{ url_for('auth.logout') }}"><button class="logbutton">Log out</button></a>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-                {% with messages = get_flashed_messages(category_filter=["error"])%}
-                {% if messages%}
-                    {% for message in messages%}
-                    <div class="alert">
-                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                        {{message}}
-                    </div>
-                    {%endfor%}
-                    {%endif%}
-                    {%endwith%}
-                {% with messages = get_flashed_messages(category_filter=["success"])%}
-                {% if messages%}
-                    {% for message in messages%}
-                    <div class="alert_success">
-                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                        {{message}}
-                    </div>
-                    {%endfor%}
-                    {%endif%}
-                    {%endwith%}
-            </header>
-        </div>
+                <div class="logout">
+                  <a href="{{ url_for('auth.logout') }}"
+                    ><button class="logbutton">Log out</button></a
+                  >
+                </div>
+              </div>
+            </div>
+          </nav>
+          {% with messages = get_flashed_messages(category_filter=["error"])%}
+          {% if messages%} {% for message in messages%}
+          <div class="alert">
+            <span
+              class="closebtn"
+              onclick="this.parentElement.style.display='none';"
+              >&times;</span
+            >
+            {{message}}
+          </div>
+          {%endfor%} {%endif%} {%endwith%} {% with messages =
+          get_flashed_messages(category_filter=["success"])%} {% if messages%}
+          {% for message in messages%}
+          <div class="alert_success">
+            <span
+              class="closebtn"
+              onclick="this.parentElement.style.display='none';"
+              >&times;</span
+            >
+            {{message}}
+          </div>
+          {%endfor%} {%endif%} {%endwith%}
+        </header>
+      </div>
     </header>
-    <form method="POST" >
-    <section class="clientLanding">
+    <form method="POST">
+      <section class="clientLanding">
         <div class="createVideoWrapper">
-            <h1>Create Video</h1>
-                    <textarea class="title" name="title" rows="4" cols="50" placeholder="Enter Video Title Here:"></textarea>
-                    <br><br>
-                    <textarea  class="text" name="text" rows="4" cols="50" placeholder="Enter Video Text Here:"></textarea>
-                    <br><br>
-                    <div class="partSelector">
-                        <div style="width: fit-content;">
-                            <label for="part">(Optional) Red Highlighted Text</label><br><br>
-                            <textarea  class="redtitle" name="part" rows="4" cols="30" placeholder="Enter Red Highlighted Text Here:"></textarea>
-                            <br><br>
-                        </div>
-                        <div style="margin-left : 20%; width: 40%;">
-                            <p>Narrator Gender:</p>
-                                <label for="gender" style="font-size: small;"> A gender will be inferred through the text if one is not provided!</label>
-                                <br>
-                                <span>Male</span>
-                                <input type="radio" name="gender" value="999999">
-                                <span>Female</span>
-                                <input type="radio" name="gender" value="-999999">
-                        </div>
-                    </div>
-                    <input class="createButton" type="submit" value="Create Video"><br><br>
+          <h1>Create Video</h1>
+          <textarea
+            class="title"
+            name="title"
+            rows="4"
+            cols="50"
+            placeholder="Enter Video Title Here:"
+          ></textarea>
+          <br /><br />
+          <textarea
+            class="text"
+            name="text"
+            rows="4"
+            cols="50"
+            placeholder="Enter Video Text Here:"
+          ></textarea>
+          <br /><br />
+          <div class="partSelector">
+            <div style="width: fit-content">
+              <label for="part">(Optional) Red Highlighted Text</label
+              ><br /><br />
+              <textarea
+                class="redtitle"
+                name="part"
+                rows="4"
+                cols="30"
+                placeholder="Enter Red Highlighted Text Here:"
+              ></textarea>
+              <br /><br />
+            </div>
+            <div style="margin-left: 20%; width: 40%">
+              <p>Narrator Gender:</p>
+              <label for="gender" style="font-size: small">
+                A gender will be inferred through the text if one is not
+                provided!</label
+              >
+              <br />
+              <span>Male</span>
+              <input type="radio" name="gender" value="999999" />
+              <span>Female</span>
+              <input type="radio" name="gender" value="-999999" />
+            </div>
+          </div>
+          <div class="additional_attributes">
+            <div class="inner_container">
+              <input name="music" type="checkbox" />
+              <label style="padding-left: 3px"> Add Background Music</label>
+            </div>
+            <div class="inner_container"></div>
+          </div>
+          <input
+            class="createButton"
+            type="submit"
+            value="Create Video"
+          /><br /><br />
         </div>
         <div class="myVideosWrapper">
-            <h1>Background Footage</h1>
-                <div id="videos">
-                    <div class="video_box">
-                        <img src="../static/minecraft_cover.png" class="display_img" alt="">
-                        <label class="container">Minecraft
-                            <input type="checkbox" name="videos" value="stock_footage/minecraft/">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                    <div class="video_box">
-                        <img src="../static/mirrorsedge.jpg" class="display_img" alt="">
-                        <label class="container">Mirrors Edge
-                            <input type="checkbox" name="videos" value="stock_footage/mirrors_edge">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                    <div class="video_box">
-                        <img src="../static/IRL.jpg" class="display_img" alt="">
-                        <label class="container">IRL
-                            <input type="checkbox" name="videos" value="stock_footage/irl/">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                    <div class="video_box">
-                        <img src="../static/cooking.webp" class="display_img" alt="">
-                        <label class="container">Cooking
-                            <input type="checkbox" name="videos" value='stock_footage/cooking/'>
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                    <div class="video_box">
-                        <img src="../static/trackmania.jpg" class="display_img"alt="">
-                        <label class="container">Trackmania
-                            <input type="checkbox" name="videos" value="stock_footage/trackmania/">
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                    <div class="video_box">
-                        <img src="../static/upload_video.png"  alt="">
-                        <label class="container">Custom Video
-                            <input type="checkbox" name="videos" value="Custom Video" disabled value="1">
-                            <p>Coming Soon!</p>
-                            <span class="checkmark"></span>
-                        </label>
-                    </div>
-                </div>
-            <div>
-                <!-- New layer in the future -->
+          <h1>Background Footage</h1>
+          <div id="videos">
+            <div class="video_box">
+              <img
+                src="../static/minecraft_cover.png"
+                class="display_img"
+                alt=""
+              />
+              <label class="container"
+                >Minecraft
+                <input
+                  type="checkbox"
+                  name="videos"
+                  value="stock_footage/minecraft/"
+                />
+                <span class="checkmark"></span>
+              </label>
             </div>
-    </div>
-    <script type="text/javascript">
-        let boxes = document.querySelectorAll("input[type=checkbox]");
-        boxes.forEach(b => b.addEventListener("change", tick));
-        function tick(e) {
-        let state = e.target.checked; // save state of changed checkbox
-        boxes.forEach(b => b.checked = false); // clear all checkboxes
-        e.target.checked = state; // restore state of changed checkbox
-        }
+            <div class="video_box">
+              <img src="../static/mirrorsedge.jpg" class="display_img" alt="" />
+              <label class="container"
+                >Mirrors Edge
+                <input
+                  type="checkbox"
+                  name="videos"
+                  value="stock_footage/mirrors_edge"
+                />
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="video_box">
+              <img src="../static/IRL.jpg" class="display_img" alt="" />
+              <label class="container"
+                >IRL
+                <input
+                  type="checkbox"
+                  name="videos"
+                  value="stock_footage/irl/"
+                />
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="video_box">
+              <img src="../static/cooking.webp" class="display_img" alt="" />
+              <label class="container"
+                >Cooking
+                <input
+                  type="checkbox"
+                  name="videos"
+                  value="stock_footage/cooking/"
+                />
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="video_box">
+              <img src="../static/trackmania.jpg" class="display_img" alt="" />
+              <label class="container"
+                >Trackmania
+                <input
+                  type="checkbox"
+                  name="videos"
+                  value="stock_footage/trackmania/"
+                />
+                <span class="checkmark"></span>
+              </label>
+            </div>
+            <div class="video_box">
+              <img src="../static/upload_video.png" alt="" />
+              <label class="container"
+                >Custom Video
+                <input
+                  type="checkbox"
+                  name="videos"
+                  value="Custom Video"
+                  disabled
+                  value="1"
+                />
+                <p>Coming Soon!</p>
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </div>
+          <div>
+            <!-- New layer in the future -->
+          </div>
+        </div>
+        <script type="text/javascript">
+          let boxes = document.querySelectorAll("input[type=checkbox]");
+          boxes.forEach((b) => b.addEventListener("change", tick));
+          function tick(e) {
+            let state = e.target.checked; // save state of changed checkbox
+            boxes.forEach((b) => (b.checked = false)); // clear all checkboxes
+            e.target.checked = state; // restore state of changed checkbox
+          }
         </script>
-    <script>
-        let subMenu = document.getElementById("subMenu");
+        <script>
+          let subMenu = document.getElementById("subMenu");
 
-        function toggleMenu() {
+          function toggleMenu() {
             subMenu.classList.toggle("open-menu");
-        }
-
-    </script>
-    </section>
-</form> 
-</body>
-<footer>
-    <p ><span><a href="{{ url_for('views.tos') }}">Terms of Service </a>  <p> </p><a href="{{url_for('views.privacy')}}">Privacy Policy</a></span> © Copyright Viddat All Rights Reserved</p>
-</footer>
+          }
+        </script>
+      </section>
+    </form>
+  </body>
+  <footer>
+    <p>
+      <span
+        ><a href="{{ url_for('views.tos') }}">Terms of Service </a>
+        <p></p>
+        <a href="{{url_for('views.privacy')}}">Privacy Policy</a></span
+      >
+      © Copyright Viddat All Rights Reserved
+    </p>
+  </footer>
 </html>
-

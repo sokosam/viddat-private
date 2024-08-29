@@ -26,6 +26,7 @@ def client():
             title = request.form.get('title')
             part = request.form.get('part')
             video = request.form.get('videos')
+            music = request.form.get('music') != None
             if not video: video = random.choice([r"stock_footage/minecraft/",
                                                  r"stock_footage/cooking/", 
                                                  r"stock_footage/irl/",
@@ -47,6 +48,7 @@ def client():
                 "USERID": user_id,
                 "VIDEO": video,
                 "GENDER": gender,
+                "MUSIC": music,
                 "USERNAME": current_user.username,
                 "THUMBNAIL_URL": current_user.profile_picture,
                 "AWS_SECRET": current_user.aws_secret,
