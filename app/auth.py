@@ -71,7 +71,7 @@ def sign_up():
         elif password != password_confirm:
             flash("Passwords do not match!", category="error")
         else:
-            new_user = User(email=email, emailConfirm=False, password = generate_password_hash(password, method='pbkdf2:sha256'), username="default", aws_secret="", aws_access="", profile_picture="../static/userProfile.png", password_reset="")
+            new_user = User(email=email, emailConfirm=False, password = generate_password_hash(password, method='pbkdf2:sha256'), username="default", aws_secret="", aws_access="", profile_picture="../static/userProfile.png", password_reset="", custom_video="")
             db.session.add(new_user)
             db.session.commit()
             link = url_for('auth.confirm_email', token=token, _external=True)

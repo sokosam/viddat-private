@@ -11,3 +11,4 @@ class User(db.Model, UserMixin):
     aws_access = db.Column(db.String(128))
     profile_picture = db.Column(db.String(256))
     password_reset = db.Column(db.String(100))
+    custom_video = db.Column(db.String(256))
