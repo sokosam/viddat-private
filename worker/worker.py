@@ -41,7 +41,7 @@ def script_async(params):
         client = web_gen()
         os.mkdir(path ="temp"+params["ID"] + "tempViddat")
 
-        try:
+        try:    
             client.generate_video(
                                 text=params['TEXT'],
                                 title=params['TITLE'],
