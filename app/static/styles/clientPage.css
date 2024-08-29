@@ -422,7 +422,8 @@ footer {
   display: flex;
 }
 .inner_container {
-  height: fit-content;
+  height: 50px;
   display: flex;
+  align-items: center;
   width: 50%;
 }

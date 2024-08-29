@@ -174,12 +174,12 @@ class web_gen:
             command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -to {end + start_time} -i {stock_footage} -i {os.path.join(output_path,"title.mp3.png")} -i "concat:{audio_str}" -filter_complex "[0:v][1:v] overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2:enable='between(t,0,{title_end})',subtitles={subtitle_body_path}:force_style='{style}'" -shortest -map 2:a:0 {out} -b 2000k -preset ultrafast -y""" #-hide_banner -loglevel error 
             if music: 
                 music_choice = choice(os.listdir("bg_music"))
-                command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -to {end + start_time} -i {stock_footage} -i {os.path.join(output_path,"title.mp3.png")} -i "concat:{audio_str}" -i bg_music/{music_choice} -filter_complex "[0:v][1:v] overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2:enable='between(t,0,{title_end})',subtitles={subtitle_body_path}:force_style='{style}';[3]adelay=0|0[s1];[2]adelay=0|0[s2];[s1][s2]amix=2[a]" -map "[a]" -shortest {out} -b 2000k -preset ultrafast -y""" #-hide_banner -loglevel error  -i {self.conjoinDirectory(env["MUSIC_DIR"], music)} 
+                command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -to {end + start_time} -i {stock_footage} -i {os.path.join(output_path,"title.mp3.png")} -i "concat:{audio_str}" -i {os.path.join(r"bg_music",music_choice)}  -filter_complex "[0:v][1:v] overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2:enable='between(t,0,{title_end})',subtitles={subtitle_body_path}:force_style='{style}';[2:a:0][3:a:0]amix=2:shortest:2:2 1[aout]" -map "[aout]" -shortest {out} -b 2000k -preset ultrafast -y""" #-hide_banner -loglevel error  -i {self.conjoinDirectory(env["MUSIC_DIR"], music)} 
         else:
             command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -to {end + start_time} -i {stock_footage} -i "concat:{audio_str}" -filter_complex "[0:v] subtitles={subtitle_body_path}:force_style='{style}'" -shortest -map 1:a:0 {out} -b 2000k -preset ultrafast -y""" # -hide_banner -loglevel error 
             if music:
                 music_choice = choice(os.listdir("bg_music"))
-                command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -to {end + start_time} -i {stock_footage} -i "concat:{audio_str}" -i bg_music/{music_choice} -filter_complex "[0:v] overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2:enable='between(t,0,{title_end})',subtitles={subtitle_body_path}:force_style='{style}';[3]adelay=0|0[s1];[2]adelay=0|0[s2];[s1][s2]amix=2[a]" -map "[a]" -shortest {out} -b 2000k -preset ultrafast -y""" #-hide_banner -loglevel error  -i {self.conjoinDirectory(env["MUSIC_DIR"], music)} 
+                command = fr"""ffmpeg -stream_loop -1 -ss {start_time} -to {end + start_time} -i {stock_footage} -i "concat:{audio_str}" -i {os.path.join(r"bg_music",music_choice)} -filter_complex "[0:v] subtitles={subtitle_body_path}:force_style='{style}';[2:a:0][1:a:0]amix=2:shortest:2:2 1[aout]" -map "[aout]" -shortest {out} -b 2000k -preset ultrafast -y""" #-hide_banner -loglevel error  -i {self.conjoinDirectory(env["MUSIC_DIR"], music)} 
         # command = (
         #     "ffmpeg",
         #     "-stream_loop", "-1",
@@ -188,7 +188,7 @@ class web_gen:
         #     "-i", os.path.join(output_path,"title.mp3.png"),
         #     "-i", f"concat:{audio_str}",  
         #     "-filter_complex", fr"[0:v][1:v] overlay=x=(main_w-overlay_w)/2:y=(main_h-overlay_h)/2:enable='between(t,0,{title_end})',subtitles={subtitle_body_path}:force_style='{style}'",
-        #     "-shortest",
+        #     "-shortest",  
         #     "-map", "2:a:0",
         #     "-to", end,
         #     out,

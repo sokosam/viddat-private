@@ -152,7 +152,7 @@
           </div>
           <div class="additional_attributes">
             <div class="inner_container">
-              <input name="music" type="checkbox" />
+              <input name="music" type="radio" value="True" />
               <label style="padding-left: 3px"> Add Background Music</label>
             </div>
             <div class="inner_container"></div>
@@ -175,6 +175,7 @@
               <label class="container"
                 >Minecraft
                 <input
+                  class="video-selection"
                   type="checkbox"
                   name="videos"
                   value="stock_footage/minecraft/"
@@ -187,6 +188,7 @@
               <label class="container"
                 >Mirrors Edge
                 <input
+                  class="video-selection"
                   type="checkbox"
                   name="videos"
                   value="stock_footage/mirrors_edge"
@@ -199,6 +201,7 @@
               <label class="container"
                 >IRL
                 <input
+                  class="video-selection"
                   type="checkbox"
                   name="videos"
                   value="stock_footage/irl/"
@@ -211,6 +214,7 @@
               <label class="container"
                 >Cooking
                 <input
+                  class="video-selection"
                   type="checkbox"
                   name="videos"
                   value="stock_footage/cooking/"
@@ -223,6 +227,7 @@
               <label class="container"
                 >Trackmania
                 <input
+                  class="video-selection"
                   type="checkbox"
                   name="videos"
                   value="stock_footage/trackmania/"
@@ -237,6 +242,7 @@
                 <input
                   type="checkbox"
                   name="videos"
+                  class="video-selection"
                   value="Custom Video"
                   disabled
                   value="1"
@@ -251,7 +257,9 @@
           </div>
         </div>
         <script type="text/javascript">
-          let boxes = document.querySelectorAll("input[type=checkbox]");
+          let boxes = document.querySelectorAll(
+            "input[type=checkbox], video-selection "
+          );
           boxes.forEach((b) => b.addEventListener("change", tick));
           function tick(e) {
             let state = e.target.checked; // save state of changed checkbox
