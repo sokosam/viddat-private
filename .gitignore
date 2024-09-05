@@ -5,3 +5,4 @@ worker/stock_footage/cooking.mp4
 envworker/stock_footage
 worker/stock_footage/cooking.mp4
 **/__pycache__/
+*.env
