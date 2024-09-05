@@ -10,13 +10,17 @@ from flask_mail import Mail
 from rq import Queue
 from redis import Redis
 from flask_socketio import SocketIO
+from dotenv import load_dotenv
+from os import environ as env, urandom
+load_dotenv()
+
 
 db = SQLAlchemy()
 app = Flask(__name__)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587 
 app.config['MAIL_USERNAME'] = 'viddatconfirm@gmail.com'
-app.config['MAIL_PASSWORD'] = getEmailPWD()
+app.config['MAIL_PASSWORD'] = env["MAIL"]
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 
@@ -34,8 +38,8 @@ socketio = SocketIO(app,message_queue='redis://redis:6379', async_mode="gevent")
 mailer = Mail(app)
 
 def create_app():
-    app.config["SECRET_KEY"] = getAppKey()
-    app.config["SQLALCHEMY_DATABASE_URI"] = getSQL()
+    app.config["SECRET_KEY"] = urandom(24)
+    app.config["SQLALCHEMY_DATABASE_URI"] = env["DB_URI"]
     app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {"pool_pre_ping": True}  
     db.init_app(app)
 

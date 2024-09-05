@@ -1,34 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/styles/tutorial.css">
-    <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
-
-    <!-- <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/tutorial.css')}}" /> -->
-    <title>Viddat Tutorial</title>
-</head>
-<body>
-    <div id="navbar">
-        <header>    
-            <nav>
-                <h1 id="viddat_button" onclick="window.location='{{ url_for('auth.sign_up')}}'" class="logo" style="font-size: 50px;">Viddat</h1>
-        </header>
-    </div>
-    <div id="tutorial_container">
-            <div id="tutorial_box">
-                <button class="nav-button left" onclick="window.location='{{ url_for('views.tutorial', step =3)}}'"></button>
-                <div id="tutorial_title">
-                    <h1>Acquiring your Keys</h1>
-                </div>
-                <div id="tutorial_body">
-                    <p>Step 2: Next click on "Users" on the menu on the left.</p>
-                    <br>
-                    <img class="steps" src="../static/step2.png" alt="">
-                </div>
-                <button class="nav-button right" onclick="window.location='{{ url_for('views.tutorial', step =5)}}'"></button>
-            </div>
-    </div>
-</body>
-</html>
+{% extends "vid-dat_tutorial-template.html" %} {%block tutorial %}
+<button
+  class="nav-button left"
+  onclick="window.location='{{ url_for('views.tutorial', step =3)}}'"
+></button>
+<div id="tutorial_title">
+  <h1>Acquiring your Keys</h1>
+</div>
+<div id="tutorial_body">
+  <p>Step 2: Next click on "Users" on the menu on the left.</p>
+  <br />
+  <img class="steps" src="../static/step2.png" alt="" />
+</div>
+<button
+  class="nav-button right"
+  onclick="window.location='{{ url_for('views.tutorial', step =5)}}'"
+></button>
+{%endblock%}

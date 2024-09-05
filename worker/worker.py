@@ -10,6 +10,9 @@ import botocore.exceptions
 import shutil
 from flask_socketio import SocketIO
 from viddat_exceptions import *
+from dotenv import load_dotenv
+from os import environ as env, urandom
+load_dotenv()
 
 
 conn = Redis(host='redis', port=6379)
@@ -17,8 +20,8 @@ worker = Worker(map(Queue, ['default']), connection=conn)
 
 socketio = SocketIO(message_queue='redis://redis:6379', async_mode="gevent")
 
-viddat_access = "AKIAZQ3DTVZZLEBKP5Z7"
-viddat_secret = "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"
+viddat_access = env["AWS_ACCESS"]
+viddat_secret = env["AWS_SECRET"]
 
 
 if __name__ == '__main__':

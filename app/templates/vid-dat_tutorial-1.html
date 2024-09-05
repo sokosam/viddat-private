@@ -1,34 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
-
-    <link rel="stylesheet" href="../static/styles/tutorial.css">
-    <!-- <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/tutorial.css')}}" /> -->
-    <title>Viddat Tutorial</title>
-</head>
-<body>
-    <div id="navbar">
-        <header>    
-            <nav>
-                <h1 id="viddat_button" onclick="window.location='{{ url_for('auth.sign_up')}}'" class="logo" style="font-size: 50px;">Viddat</h1>
-        </header>
-    </div>
-    <div id="tutorial_container">
-            <div id="tutorial_box">
-                <button class="nav-button left" ></button>
-                <div id="tutorial_title">
-                    <h1>Welcome to the Viddat Tutorial!</h1>
-                </div>
-                <div id="tutorial_body">
-                    <p>This page will explain all you need to know in order to use Viddat!</p>
-                    <br>
-                    <p>To move between steps! Simply hover and click on either the left or right of this container!</p>
-                </div>
-                <button class="nav-button right" onclick="window.location='{{ url_for('views.tutorial', step =2)}}'"></button>
-            </div>
-    </div>
-</body>
-</html>
+{% extends "vid-dat_tutorial-template.html" %} {%block tutorial %}
+<button class="nav-button left"></button>
+<div id="tutorial_title">
+  <h1>Welcome to the Viddat Tutorial!</h1>
+</div>
+<div id="tutorial_body">
+  <p>This page will explain all you need to know in order to use Viddat!</p>
+  <br />
+  <p>
+    To move between steps! Simply hover and click on either the left or right of
+    this container!
+  </p>
+</div>
+<button
+  class="nav-button right"
+  onclick="window.location='{{ url_for('views.tutorial', step =2)}}'"
+></button>
+{%endblock%}
