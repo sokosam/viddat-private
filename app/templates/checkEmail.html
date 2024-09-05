@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/emailConfirmation.css')}}" />
+    <title>Viddat Home</title>
+</head>
+<body>
+    <header>
+        <div id="navbar">
+            <header>    
+                <nav>
+                    <h1 class="logo" style="font-size: 50px;">Viddat</h1>
+            </header>
+        </div>
+
+        <section>
+            <div class="emailParent">
+                <div class="emailChild" id="checkEmailChild" style="border-radius: 30px;">
+                    <img width="90" height="90" src="/static/greenCheckmark.png">
+                    <h1>Verify your Email</h1>
+                    <p>You have entered <span style="font-weight: 400;">{{session['email']}}</span> As the Email Address for your VidDat account, verify your email by clicking the link sent to your listed email address.</p>
+                    <a href="{{ url_for('client_page.client') }}"><button class="checkEmailCta">Verified? Lets go!</button></a>
+                </div>
+            </div>
+        </section>
+    </header>
+    
+</body>
+</html>

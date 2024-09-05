@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/forgot.css')}}" />
+    <title>Viddat Home</title>
+    <script>
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
+    <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
+    
+</head>
+<body>
+    <header>
+        <div id="navbar">
+            <header>    
+                <nav>
+                    <h1 id="viddat_button" onclick="window.location='{{ url_for('auth.sign_up')}}'" class="logo" style="font-size: 50px;">Viddat</h1>
+            </header>
+        </div>
+
+        <section>
+            <div class="emailParent">
+                <div class="emailChild">
+                    <img width="180" height="180" src="/static/emailIcon.png">
+                    <h1 style="justify-content: center;">Reset Your Password</h1>
+                    <p>A password reset link will be sent to the email your account was under</p>
+                    <form method="POST">
+                        <label for="email">Email:</label><br>
+                        <input type="email" id="email" name="email">
+                        {% with messages = get_flashed_messages(category_filter=["error"])%}
+                        {% if messages%}
+                            {% for message in messages%}
+                            <div class="alert">
+                                {{message}}
+                            </div>
+                            {%endfor%}
+                            {%endif%}
+                            {%endwith%}
+                        {% with messages = get_flashed_messages(category_filter=["success"])%}
+                        {% if messages%}
+                            {% for message in messages%}
+                            <div class="alert_success">
+                                {{message}}
+                            </div>
+                            {%endfor%}
+                            {%endif%}
+                            {%endwith%}
+                        <br>
+                        <input type="submit" value="Send Email">
+                    </form>
+
+                </div>
+            </div>
+        </section>
+    </header>
+    
+</body>
+</html>

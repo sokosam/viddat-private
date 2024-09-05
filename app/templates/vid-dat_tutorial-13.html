@@ -1,0 +1,20 @@
+{% extends "vid-dat_tutorial-template.html" %} {%block tutorial %}
+<button
+  class="nav-button left"
+  onclick="window.location='{{ url_for('views.tutorial', step =12)}}'"
+></button>
+<div id="tutorial_title">
+  <h1>You're All Set to Start Creating!</h1>
+</div>
+<div id="tutorial_body">
+  <p style="margin: auto; justify-content: center">
+    Start creating on the client page!
+  </p>
+  <br />
+  <h1><a href="{{url_for('client_page.client')}}">Welcome to Viddat!</a></h1>
+</div>
+<button
+  class="nav-button right"
+  onclick="window.location='{{ url_for('views.tutorial', step =14)}}'"
+></button>
+{%endblock%}

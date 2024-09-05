@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/forgot.css')}}" />
+    <title>Viddat Home</title>
+    <script>
+        function ShowPassword() {
+        var x = document.getElementById("password");
+          if (x.type === "password") {
+           x.type = "text";
+           } else {
+           x.type = "password";
+        }
+        var x2 = document.getElementById("confirm");
+        if (x2.type === "password") {
+           x2.type = "text";
+           } else {
+           x2.type = "password";
+        }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div id="navbar">
+            <header>    
+                <nav>
+                    <h1 id="viddat_button" onclick="window.location='{{ url_for('auth.sign_up')}}'" class="logo" style="font-size: 50px;">Viddat</h1>
+            </header>
+        </div>
+
+        <section>
+            <div class="emailParent">
+                <div class="emailChild">
+                    <img width="180" height="180" src="/static/emailIcon.png">
+                    <h1 style="justify-content: center;">Reset Your Password</h1>
+                    <form method="POST">
+                        <label for="password">Password:</label><br>
+                        <input type="password" autocomplete="off" id="password" name="password"><br><br>
+                        <label for="confirm">Confirm Password:</label><br>
+                        <input type="password" autocomplete="off" id="confirm" name="confirm"><br>
+                        {% with messages = get_flashed_messages(category_filter=["error"])%}
+                        {% if messages%}
+                            {% for message in messages%}
+                            <div class="alert">
+                                {{message}}
+                            </div>
+                            {%endfor%}
+                            {%endif%}
+                            {%endwith%}
+                        {% with messages = get_flashed_messages(category_filter=["success"])%}
+                        {% if messages%}
+                            {% for message in messages%}
+                            <div class="alert_success">
+                                {{message}}
+                            </div>
+                            {%endfor%}
+                            {%endif%}
+                            {%endwith%}
+                        <input type="checkbox" onclick="ShowPassword()"> Show Password <br>
+                        <input type="submit" value="Reset Password">
+                    </form>
+
+                </div>
+            </div>
+        </section>
+    </header>
+    
+</body>
+</html>

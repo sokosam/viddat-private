@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/logInStyle.css')}}" />
+    <title>Log in to Viddat</title>
+    <script>
+        function ShowPassword() {
+        var x = document.getElementById("password");
+          if (x.type === "password") {
+           x.type = "text";
+           } else {
+           x.type = "password";
+        }
+        var x2 = document.getElementById("confirm");
+        if (x2.type === "password") {
+           x2.type = "text";
+           } else {
+           x2.type = "password";
+        }
+        }
+    </script>
+        <script>
+            if ( window.history.replaceState ) {
+                window.history.replaceState( null, null, window.location.href );
+            }
+        </script>
+</head>
+<body>
+    <div class="all">
+        <header>
+            <a href="/" class="logo"><h1>Viddat</h1></a>
+        </header>
+        <section>
+            <div class="landing">
+                <div class="secondHalf">
+                    <div class="secondHalfOutside">
+                        <h1>Log in</h1>
+                        <h2 style="display: inline;">Don't have an account?</h2>
+                            <a href="{{ url_for('auth.sign_up') }}" style="display: inline;">
+                                <h2 style="display: inline;">Sign Up Here</h2>
+                            </a> <br><br>
+                        <div class="secondHalfInside">
+                            <form method="POST">
+                                <label for="email">Email:</label><br>
+                                <input type="email" id="email" name="email"><br><br>
+                                <label for="password">Password:</label><br>
+                                <input type="password" autocomplete="off" id="password" name="password">
+                                {% with messages = get_flashed_messages()%}
+                                {% if messages%}
+                                    {% for message in messages%}
+                                    <div class="alert">
+                                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                                        {{message}}
+                                    </div>
+                                    {%endfor%}
+                                    {%endif%}
+                                    {%endwith%}
+                                <br>
+                                <div>
+                                    <a style="float:right; font-size: 15px; font-weight: 400;" href="{{url_for('auth.recover')}}">Forgot Password?</a>
+
+                                    <input type="checkbox" onclick="ShowPassword()"> Show Password<br><br>        
+                                </div>
+                                <br>
+                                <input type="submit" value="Login Now">
+                            </form>
+                        </div>
+                        <a id='ToS'href="{{ url_for('views.tos') }}">Terms of Service</a>
+                        <br>
+                        <a id='privacy'href="{{ url_for('views.privacy') }}">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </section>
+</body>
+</html>

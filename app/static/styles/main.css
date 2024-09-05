@@ -1,0 +1,273 @@
+/* latin-ext */
+@font-face {
+    font-family: 'Red Hat Display';
+    font-style: italic;
+    font-weight: 300 900;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/redhatdisplay/v19/8vIS7wUr0m80wwYf0QCXZzYzUoTg-A6tTY_9CQ.woff2) format('woff2');
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face {
+    font-family: 'Red Hat Display';
+    font-style: italic;
+    font-weight: 300 900;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/redhatdisplay/v19/8vIS7wUr0m80wwYf0QCXZzYzUoTg-A6jTY8.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+  /* latin-ext */
+  @font-face {
+    font-family: 'Red Hat Display';
+    font-style: normal;
+    font-weight: 300 900;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/redhatdisplay/v19/8vIQ7wUr0m80wwYf0QCXZzYzUoTg8z6hVYs.woff2) format('woff2');
+    unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
+  /* latin */
+  @font-face {
+    font-family: 'Red Hat Display';
+    font-style: normal;
+    font-weight: 300 900;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/redhatdisplay/v19/8vIQ7wUr0m80wwYf0QCXZzYzUoTg_T6h.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Red Hat Display', sans-serif;
+    caret-color: transparent;
+}
+
+#navbar {
+    background-color: #fff;
+}
+
+li, a, button {
+    font-weight: 500;
+    font-size: 19px;
+    color: black;
+    text-decoration: none;
+}
+
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 15px 5%;
+}
+
+.logo {
+    font-family: 'Red Hat Display', sans-serif;
+    cursor: pointer;
+    margin-right: auto;
+}
+
+.nav_links {
+    list-style: none;
+}
+
+.nav_links li {
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+.nav_links li a:hover {
+    color: #31bde0;
+}
+
+button {
+    margin-left: 20px;
+    padding: 9px 25px;
+    background: rgb(43,104,197);
+    background: linear-gradient(309deg, rgba(43,104,197,1) 0%, rgba(219,1,255,1) 100%); 
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 1s ease 0s;
+    color: #fff;
+}
+
+button:hover {
+    background: linear-gradient(309deg, rgba(43,104,197,1) 0%, rgb(227, 85, 252) 100%); 
+}
+
+.landing {
+    background-color: #ffffff;
+    width: 100%;
+    height: 920px;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 135px;
+}
+
+.hook {
+    width: 50%;
+    background-color: #ffffff00;
+}
+
+.landing h1 {
+    color: #fff;
+    font-size: 86px;
+    background-color: #ffffff00;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; 
+}
+
+.sticky + section {
+    padding-top: 100px; 
+}
+
+.landingGraphic {
+    width: 100%;
+    border-radius: 70px;
+    padding-bottom: 30px;
+    padding-top: 100px;
+}
+
+.featuresSection {
+    background-color: #686EFC;
+    width: 100%;
+    margin-top: -60px;
+    padding:300px;
+    padding-top: 220px;
+    padding-bottom: 220px;
+}
+
+.featuresSection h1 {
+    font-size: 68px;
+    font-weight: 700;
+}
+
+.featuresParent {
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    flex-wrap: wrap;
+    padding-bottom: 80px;
+}
+
+.featuresChild {
+    background: transparent;
+    text-align: left;
+    border-top: 2px solid #fff;
+    padding-top: 20px;
+    width: 400px;
+    padding-bottom: 20px;
+}
+
+.featuresChild h2 {
+    color: #fff;
+    font-size: 32px;
+    margin-top: 15px;
+}
+
+.featuresChild p {
+    margin-top: 15px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 300;
+}
+
+.featuresCta button{
+    margin-left: 0px;
+    padding: 9px 25px;
+    background: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.1s ease 0s;
+    color: #686EFC;
+}
+
+.featuresCta button:hover{
+    background: #07ccfd;
+    color: #fff;
+}
+
+.howItWorksSection {
+    background: #F7F4FD;
+    padding: 85px 10%;
+    width: 100%;
+}
+
+.howItWorksSection h1{
+    font-size: 60px;
+    color: #040222;
+}
+
+
+.howItWorksSection p{
+    color: #040222;
+    font-size: 25px;
+}
+
+.stepCardParent {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 30px 30px;
+}
+
+.stepCard {
+    width: 444px;
+    text-align: left;
+    background-color: #fff;
+    padding: 24px 32px;
+    -webkit-box-shadow: -1px 10px 20px -11px rgba(199,199,199,1);
+    -moz-box-shadow: -1px 10px 20px -11px rgba(199,199,199,1);
+    box-shadow: -1px 10px 20px -11px rgba(199,199,199,1);
+    border-radius: 4px;
+    transition: all 0.5s ease 0s;
+}
+
+.stepCard h2, h3{
+    font-size: 22px;
+    color: #040222;
+}
+
+.stepCard h2 {
+    color: #C0C0C0;
+}
+
+.stepCard h3 {
+    padding-top: 15px;
+}
+
+.stepCard p {
+    padding-top: 10px;
+    font-size: 20px;
+    color: #040222;
+}
+
+.imgContainer img{
+    display:block;
+    margin:auto;
+}
+
+.textCard {
+    height: 175px;
+}
+
+.stepCard:hover {
+    -webkit-box-shadow: -1px 10px 20px -11px rgba(143,143,143,1);
+-moz-box-shadow: -1px 10px 20px -11px rgba(143,143,143,1);
+box-shadow: -1px 10px 20px -11px rgba(143,143,143,1);
+}
+
+
+
+

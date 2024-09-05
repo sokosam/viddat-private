@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
+    <script>
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/accountSettings.css')}}" />
+    <title>Viddat Home</title>
+</head>
+<body>
+    <header>
+        <div id="navbar">
+            <header>    
+                <nav>
+                    <a href="{{ url_for('client_page.client') }}" class="logo"><h1 style="color: black;">Viddat</h1></a>
+                    <ul class="nav_links">
+                        <li><a href="{{url_for('client_page.status')}}">Your Video</a></li>
+                        <li><a href="{{url_for('views.tutorial',step=1)}}">How To Use</a></li>
+                        <li><a href="{{url_for('client_page.accountSettings')}}" style="margin-right: 20px;">Profile</a></li>
+                    </ul>
+                    <div class="profile" onclick="toggleMenu()">
+                        <img src="{{current_user.profile_picture}}" class="user-pic" width="55px" height="55px" onerror="this.onerror=null; this.src='../static/loading.gif'">
+                        <img src="../static/downArrow.svg" width="14" height="14" class="downArrow"> 
+                    </div>
+
+                    <div class="sub-menu-wrap" id="subMenu">
+                        <div class="user-email">
+                            <h2>{{current_user.email}}</h2>
+                        </div>
+                        <div class="sub-menu">
+                            <div class="user-info ">
+                                <a href="{{url_for('client_page.accountSettings')}}">
+                                    <div class="account-settings">
+                                        <img src="../static/settings.png" class="setting_gear" width="20px" height="20px" style="margin-top: 3px;">
+                                        <h3 style="margin-left: 4px;">Account Settings</h3>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="logout">
+                                <a href="{{ url_for('auth.logout') }}"><button class="logbutton">Log out</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                {% with messages = get_flashed_messages(category_filter=["error"])%}
+                {% if messages%}
+                    {% for message in messages%}
+                    <div class="alert">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        {{message}}
+                    </div>
+                    {%endfor%}
+                    {%endif%}
+                    {%endwith%}
+                {% with messages = get_flashed_messages(category_filter=["success"])%}
+                {% if messages%}
+                    {% for message in messages%}
+                    <div class="alert_success">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        {{message}}
+                    </div>
+                    {%endfor%}
+                    {%endif%}
+                    {%endwith%}
+            </header>
+        </div>
+    </header>
+    
+    
+
+    <section style="background-color: #fff; height: 870px">
+        <form enctype=multipart/form-data method="POST">
+            <div class="sideNav">
+                <div class="user-img">
+                        <img src="{{current_user.profile_picture}}" id="photo" height="80px" width="80px" onerror="this.onerror=null; this.src='../static/loading.gif'">
+                        <input 
+                            type="file" 
+                            class="file-uploader"
+                            onchange="upload()"
+                            accept="image/*"
+                            id="pfp"
+                            name="pfp"
+                            >
+                    <label for="file"><img src="../static/cam.png" height="10px" width="10px" id="uploadbtn"></label>
+                    <script>
+                        function upload() {
+                            const fileUploadInput = document.querySelector('.file-uploader');
+
+                            // using index [0] to take the first file from the array
+                            const image = fileUploadInput.files[0];
+
+                            // check if the file selected is not an image file
+                            if (!image.type.includes('image')) {
+                            return alert('Only images are allowed!');
+                            }
+
+                            // check if size (in bytes) exceeds 10 MB
+                            if (image.size > 10*1024*1024) {
+                                fileUploadInput.value= null;
+                            return alert('Maximum upload size is 10MB!');
+                            }     
+                            const fileReader = new FileReader();
+                            fileReader.readAsDataURL(image);
+
+                            fileReader.onload = (fileReaderEvent) => {
+                                const url = URL.createObjectURL(image)
+                                document.getElementById("photo").src=url
+                            }
+                        }                                 
+                    </script>
+                </div>
+                <div style="padding-top: 40px;">
+                <a href="{{url_for('client_page.accountSettings')}}"><li style="color: #346DFF; font-weight: 500; background-color: #A2B9F4;">Account Settings</li></a>
+                <a href="{{url_for('views.tos')}}"><li>Terms of Service</li></a>
+                <a href="{{url_for('views.privacy')}}"><li>Privacy Policy</li></a>
+                <!-- <a href="{{url_for('client_page.premiumSubscriptions')}}"><li>Premium Subscriptions</li></a>
+                <a href="{{url_for('client_page.billingHistory')}}"><li>Billing History</li></a> -->
+                </div>
+            </div>
+
+            <div class="accountSettingsParent">
+                <h1 style="text-align: left; font-size: 30px;">Account Settings</h1>
+                <p style="text-align: left; font-weight: 300; font-size: 18px;">View and update your account details, profile and more.</p>
+                <p style="text-align: left; padding-bottom: 30px; font-weight: 300; font-size: 18px;"> Note: If you leave a field blank, it will not update whilst others will! </p>
+                <div class="accountSettingsChild">
+                    <div style="border-bottom: 1px solid #D3D3D3; padding: 20px 30px;">
+                        <h1 style="text-align: left; font-size: 20px;">Account Info</h1>
+                    </div>
+                    <div style="padding: 30px;">
+                            <label for="access">AWS Access Code</label>
+                            <br>
+                            <input type="password" id="access" name="access" autocomplete="off" placeholder="Required">
+                            <br><br>
+                            <label for="secret">AWS Secret Code</label>
+                            <br>
+                            <input type="password" id="secret" name="secret" autocomplete="off" placeholder="Required"> 
+                            <br><br>
+                            <label for="username">Username</label>
+                            <br>
+                            <input type="text" id="username" name="username" value="{{current_user.username}}">
+                            <br>
+                            <br>
+                            <input type="submit" value="Save">
+                            
+                    </div> 
+                </div>
+            </div>
+            
+        </form>
+        
+    </section>
+
+    <script>
+
+
+        let subMenu = document.getElementById("subMenu");
+
+        function toggleMenu() {
+            subMenu.classList.toggle("open-menu");
+        }
+    </script>
+</body>
+</html>

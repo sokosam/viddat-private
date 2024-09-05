@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/status.css')}}" />
+    <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
+
+    <title>Viddat Home</title>
+    <script>
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var socket = io();
+            // socket.connect('http://web:5000');
+
+            // Fetch the job_id from the session or URL parameter
+            var job_id = "{{ current_user.get_id() }}"; // Set the job_id to the current user's ID
+
+            // Join the room for this job
+            socket.emit('join', {'job_id': job_id});
+
+            socket.on('task_complete', function(data) {
+                if (data.job_id === job_id) {
+                    var status = document.getElementById("status");
+                    status.outerHTML = '<a href="' +data.url +'" class="status_video"> Status: Video Finshed! </a>';
+                    var notice = document.getElementById("Notice");
+                    notice.innerHTML = '<span style="color: red;">Note:</span> This link will only be valid for 30 minutes, after this time period the video will become unaccessible';
+                    document.getElementById("Note").remove();
+                }
+            });
+            socket.on('task_started', function(data) {
+                if (data.job_id === job_id)
+            {
+                var status = document.getElementById("status");
+                status.innerHTML = 'Status: In Progress';
+                var note = document.getElementById("Note");
+                note.innerHTML = "This process will take around 3-5 minutes! Refresh the page to see if its finished!";
+
+            }
+            });
+
+            socket.on('task_error', function(data) {
+                if (data.job_id === job_id) {
+                    var status = document.getElementById("status");
+                    status.outerHTML = '<a href="' +data.url +'" class="status_video" style= "color:red;"> Status: Failed</a>';
+                    var notice = document.getElementById("Notice");
+                    notice.innerHTML = '<span style="color: red;">Cause:</span> ' + data.error;
+                    document.getElementById("Note").remove();
+
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <div id="navbar">
+            <header>    
+                <nav>
+                    <a href="{{ url_for('client_page.client') }}" class="logo"><h1 style="color: black;">Viddat</h1></a>
+                    <ul class="nav_links">
+                        <li><a href="{{url_for('client_page.status')}}">Your Video</a></li>
+                        <li><a href="{{url_for('views.tutorial', step=1)}}">How To Use</a></li>
+                        <li><a href="{{url_for('client_page.accountSettings')}}" style="margin-right: 20px;">Profile</a></li>
+                    </ul>
+                    <div class="profile" onclick="toggleMenu()">
+                        <img src="{{current_user.profile_picture}}" class="user-pic" width="55px" height="55px" onerror="this.onerror=null; this.src='../static/loading.gif'">
+                        <img src="static/downArrow.svg" width="14" height="14" class="downArrow"> 
+                    </div>
+
+                    <div class="sub-menu-wrap" id="subMenu">
+                        <div class="user-email">
+                            <h2>{{current_user.email}}</h2>
+                        </div>
+                        <div class="sub-menu">
+                            <div class="user-info ">
+                                <a href="{{url_for('client_page.accountSettings')}}">
+                                    <div class="account-settings">
+                                        <img src="static/settings.png" class="setting_gear" width="20px" height="20px" style="margin-top: 3px;">
+                                        <h3 style="margin-left: 4px;">Account Settings</h3>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="logout">
+                                <a href="{{ url_for('auth.logout') }}"><button class="logbutton">Log out</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+        </div>
+    </header>
+    <section class="status">
+
+        <div class="status_video_wrapper">
+            <h1>Your Video</h1>
+            <div class="release">
+                <br>
+                {% if video_status == "finished" %}
+                <li>Stock Footage used: {{stock_footage}}</li>
+                <img class="video_image" src="../static/{{cover}}" alt="Image of content being generated">
+                <li>Number of Characters: {{characters}}</li>
+                <!-- <li>Reddit Post Used: {post}</li> -->
+                <a class="status_video" href="{{video}}">Status: Video Finshed!</a>
+                <p><span style="color: red;">Note:</span> This link will only be valid for 30 minutes, after this time period the video will become unaccessible</p>
+              
+                {% elif video_status == "started" %}
+                <li>Stock Footage used: {{stock_footage}}</li>
+                <img class="video_image" src="../static/{{cover}}" alt="Image of content being generated">
+                <li>Number of Characters: {{characters}}</li>
+                <!-- <li>Reddit Post Used: {post}</li> -->
+                <p class ="status_video" id="status">Status: Generating...</p>
+                <p id="Note">This process will take around 3-5 minutes depending on input size! Stay on this page to retrieve your video!</p>
+                <p id="Notice"><span style="color: red;">Note:</span> On completion, there will be a embedded link to access your video. This link will only be valid for 30 minutes.</p>
+
+                {% elif  video_status =="queued" %}
+                <li>Stock Footage used: {{stock_footage}}</li>
+                <img class="video_image" src="../static/{{cover}}" alt="Image of content being generated">
+                <li>Number of Characters: {{characters}}</li>
+                <!-- <li>Reddit Post Used: {post}</li> -->
+                <p class ="status_video" id="status">Status: Queued</p>
+                <p id = "Note">Your video is in queue to be generated!</p>
+                <p id="Notice"><span style="color: red;">Note:</span> On completion, there will be a embedded link to access your video. This link will only be valid for 30 minutes.</p>
+                {% elif video_status == "failed" %}
+                <li>Stock Footage used: {{stock_footage}}</li>
+                <img class="video_image" src="../static/{{cover}}" alt="Image of content being generated">
+                <li>Number of Characters: {{characters}}</li>
+                <!-- <li>Reddit Post Used: {post}</li> -->
+                <p class ="status_video" id="status" style="color: red;">Status: Failed</p>
+                <p id="Notice"><span style="color: red;">Cause:</span> {{err}}</p>
+
+                {% else %}
+                <h2 style="margin: auto;">It's empty here!</h2>
+                <p style="margin: 1rem;">This is the page where you can retrieve your video!</p>
+                <a href="{{url_for('client_page.client')}}">
+                    <button id="redirect_client">Let's get creating!</button>
+                </a>
+                {% endif %}
+                <br>
+
+                <ul id="messages"></ul>
+            </div>
+
+        </div>
+
+    <script>
+        let subMenu = document.getElementById("subMenu");
+
+        function toggleMenu() {
+            subMenu.classList.toggle("open-menu");
+        }
+    </script>
+</body>
+</html>

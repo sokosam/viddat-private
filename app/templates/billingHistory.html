@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/clientPage.css')}}" />
+    <title>Viddat Home</title>
+</head>
+<body>
+    <header>
+        <div id="navbar">
+            <header>    
+                <nav>
+                    <a href="{{ url_for('client_page.client') }}" class="logo"><h1 style="color: black;">Viddat</h1></a>
+                    <ul class="nav_links">
+                        <li><a href="{{url_for('views.pricing')}}">Statistics</a></li>
+                        <li><a href="{{url_for('auth.login')}}" style="margin-right: 20px;">Profile</a></li>
+                    </ul>
+                    <div class="profile" onclick="toggleMenu()">
+                        <img src="{{current_user.profile_picture}}" class="user-pic" width="55px" height="55px" onerror="this.onerror=null; this.src='../static/loading.gif'">
+                        <img src="static/downArrow.svg" width="14" height="14" class="downArrow"> 
+                    </div>
+
+                    <div class="sub-menu-wrap" id="subMenu">
+                        <div class="user-email">
+                            <h2>{{current_user.email}}</h2>
+                        </div>
+                        <div class="sub-menu">
+                            <div class="user-info ">
+                                <a href="{{url_for('client_page.accountSettings')}}">
+                                    <div class="account-settings">
+                                        <img src="static/settings.png" class="setting_gear" width="20px" height="20px" style="margin-top: 3px;">
+                                        <h3 style="margin-left: 4px;">Account Settings</h3>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="logout">
+                                <a href="{{ url_for('auth.logout') }}"><button class="logbutton">Log out</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+        </div>
+    </header>
+
+    <section>
+        <div class="sideNav">
+                <a href="{{url_for('client_page.accountSettings')}}"><li>Account Settings</li></a>
+                <a href="{{url_for('client_page.premiumSubscriptions')}}"><li>Premium Subscriptions</li></a>
+                <a href="{{url_for('client_page.billingHistory')}}"><li style="color: #346DFF; font-weight: 500; background-color: #A2B9F4;">Billing History</li></a>
+        </div>
+    </section>
+
+    <script>
+        let subMenu = document.getElementById("subMenu");
+
+        function toggleMenu() {
+            subMenu.classList.toggle("open-menu");
+        }
+    </script>
+</body>
+</html>

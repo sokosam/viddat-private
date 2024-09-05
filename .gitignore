@@ -1,0 +1,8 @@
+worker/stock_footage
+worker/stock_footage/cooking.mp4
+**/__pycache__/
+.env
+envworker/stock_footage
+worker/stock_footage/cooking.mp4
+**/__pycache__/
+*.env
